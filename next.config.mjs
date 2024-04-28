@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.cyberpowerpc.com",
       },
+      {
+        protocol: "https",
+        hostname: "maingear.com",
+      },
     ],
   },
 };
