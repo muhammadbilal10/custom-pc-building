@@ -18,6 +18,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "demo-kalles-4-1.myshopify.com",
       },
+      {
+        protocol: "https",
+        hostname: "m.media-amazon.com",
+      },
     ],
   },
 };
