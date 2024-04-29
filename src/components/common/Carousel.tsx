@@ -69,14 +69,19 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             />
           </div>
         ))}
-        {/* <div className="z-10 p-5 bg-opacity-50 bg-black rounded-md shadow-md">
-          <h1 className="text-4xl font-bold">Find Your Dream Home</h1>
+        <div className="lg:block hidden absolute z-50 p-5  w-[520px] top-[40%] m-7">
+          <h1 className="text-4xl font-bold">
+            Design, Build, and Enhance Your Ideal PC
+          </h1>
           <p className="mt-4 max-w-lg mx-auto">
-            We are recognized for exceeding client expectations and delivering
-            great results through dedication, ease of process, and extraordinary
-            services to our worldwide clients.
+            Dive into custom PC construction with our expert guidance on parts
+            selection, price comparisons, and compatibility. Craft your perfect
+            machine today.
           </p>
-        </div> */}
+          <Button variant="ghost" className="mt-8 bg-white text-black">
+            Start Assembling Now
+          </Button>
+        </div>
         <div className="">
           <div className="absolute top-[85%] lg:top-[94%] left-[30%] lg:left-[45%] transform -translate-y-1/2">
             <Button
@@ -97,6 +102,17 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             </Button>
           </div>
         </div>
+      </div>
+      <div className="lg:hidden block px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold">
+          Design, Build, and Enhance Your Ideal PC
+        </h1>
+        <p className="mt-4">
+          Dive into custom PC construction with our expert guidance on parts
+          selection, price comparisons, and compatibility. Craft your perfect
+          machine today.
+        </p>
+        <Button className="mt-8 ">Start Assembling Now</Button>
       </div>
     </div>
   );

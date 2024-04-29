@@ -13,7 +13,6 @@ export default function BuildGuides() {
           width={800}
           className="h-full w-full"
         />
-
         <div className="space-y-8 my-auto max-lg:text-center pr-10">
           <div className="space-y-2">
             <h2 className="text-6xl font-bold">Build Guides</h2>
