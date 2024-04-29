@@ -15,7 +15,9 @@ export default function BuildGuides() {
         />
         <div className="space-y-8 my-auto max-lg:text-center pr-10">
           <div className="space-y-2">
-            <h2 className="text-6xl font-bold">Build Guides</h2>
+            <h2 className="max-sm:text-3xl sm:text-4xl lg:text-6xl font-bold">
+              Build Guides
+            </h2>
             <p>
               Building your own PC and need ideas on where to get started?
               Explore our build guides which cover systems for a variety of

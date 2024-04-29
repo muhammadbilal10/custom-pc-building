@@ -14,134 +14,222 @@ export default function Home() {
     "https://www.cyberpowerpc.com/ti/mainbanner/AMD_Radeon7000_Banner.jpg",
   ];
 
-  const pcProducts = [
+  const preBuiltPcList = [
     {
-      id: "PBET99611",
-      name: "Prebuilt Gaming PC GLX 99611",
-      image: "/images/cs/PBET2018/ET99611/main_400.png",
-      specs: [
-        "Windows 11 Home",
-        "Intel® Core™ Processor i7-14700KF",
-        "GeForce RTX™ 4060 Ti 16GB GDDR6 Video Card (DLSS 3.0) [AI-Powered Graphics]",
-        "32GB DDR5-6000MHz RAM",
-        "Z790 DDR5 Motherboard",
-        "2TB PCIe NVMe M.2 SSD",
-      ],
-      price: "$1529",
-      previous_price: "$1579",
-      reviews: 16,
-      fps: 145,
-      link: "/system/Prebuilt-Gaming-PC-GLX-99611",
-    },
-    {
-      id: "PBET99620",
-      name: "Prebuilt Gaming PC GLX 99620",
-      image: "/images/cs/PBET2018/ET99620/wht_400.png?v2",
-      specs: [
-        "Windows 11 Home",
-        "Intel® Core™ Processor i9-14900KF",
-        "GeForce RTX™ 4070 Ti SUPER 16GB GDDR6X Video Card",
-        "32GB DDR5-6000MHz RAM",
-        "Z790 DDR5 Motherboard",
-        "2TB PCIe NVMe GEN4 M.2 SSD",
-      ],
-      price: "$2149",
-      previous_price: "$2199",
-      reviews: 0,
-      fps: 215,
-      link: "/system/Prebuilt-Gaming-PC-GLX-99620",
-    },
-    {
-      id: "PBET9799",
-      name: "Prebuilt Gaming PC GM 9799",
-      image: "/images/cs/PBET2018/et9799_auron242v/blk_400.png",
-      specs: [
-        "Windows 11 Home",
-        "AMD Ryzen™ 5 7600 Processor",
-        "GeForce RTX™ 4060 8GB GDDR6 Video Card",
-        "16GB (16GBx1) DDR5/5600MHz Memory",
-        "B650 AM5 with WIFI Motherboard",
-        "1TB PCIe NVMe M.2 SSD",
-      ],
-      price: "$979",
-      previous_price: "$1029",
-      reviews: 8,
-      fps: 125,
-      link: "/system/Prebuilt-Gaming-PC-GM-9799",
-    },
-    {
-      id: "PBET99612",
-      name: "Prebuilt Gaming PC GLX 99612",
-      image: "/images/cs/PBET2018/ET99612/main_400.png",
-      specs: [
-        "Windows 11 Home",
-        "Intel® Core™ Processor i7-14700KF",
-        "GeForce RTX™ 4070 Ti 12GB GDDR6X Video Card",
-        "32GB DDR5-6000MHz RAM",
-        "Z790 DDR5 Motherboard",
-        "2TB PCIe NVMe M.2 SSD",
-      ],
-      price: "$1949",
-      previous_price: "$1999",
-      reviews: 6,
-      fps: 215,
-      link: "/system/Prebuilt-Gaming-PC-GLX-99612",
-    },
-    {
-      id: "PBET2795",
-      name: "Prebuilt Gaming PC GLX 2795",
-      image: "/images/cs/pbet2018/ET2795_H510/wht_400.png?v1",
-      specs: [
-        "Windows 11 Home",
-        "Intel® Core™ Processor i7-12700KF",
-        "GeForce RTX™ 3070 8GB GDDR6X",
-        "32GB (8Gx4) DDR4/3200MHz RAM",
-        "Z690 DDR4 Motherboard",
-        "500GB PCIe NVMe M.2 SSD",
-      ],
-      price: "$1249",
-      previous_price: "$1299",
-      reviews: 9,
-      fps: 150,
-      link: "/system/Prebuilt-Gaming-PC-GLX-2795",
-    },
-    {
-      id: "PBET99613",
-      name: "Prebuilt Gaming PC GLX 99613",
-      image: "/images/cs/PBET2018/ET99613/main_400.png?v1",
-      specs: [
-        "Windows 11 Home",
-        "Intel® Core™ Processor i9-14900KF",
-        "GeForce RTX 4090 24GB GDDR6X Video Card",
-        "64GB DDR5-6000MHz RAM",
-        "Z790 DDR5 Motherboard",
-        "2TB PCIe NVMe M.2 SSD",
-      ],
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
       price: "$3379",
-      previous_price: "$3429",
-      reviews: 0,
-      fps: 315,
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 60,
+      fps: "315",
       link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/PBET2018/ET4416_matrexx55/blk_400.png?v1",
     },
     {
-      id: "PBET99622",
-      name: "Prebuilt Gaming PC GLX 99622",
-      image: "/images/cs/PBET2018/ET99622/blk_400.png",
-      specs: [
-        "Windows 11 Home",
-        "AMD Ryzen™ 9 7900X Processor",
-        "GeForce RTX™ 4070 Ti SUPER 16GB GDDR6X Video Card",
-        "64GB DDR5-6000MHz RAM",
-        "X670-P Motherboard",
-        "2TB PCIe NVMe GEN4 M.2 SSD",
-      ],
-      price: "$2119",
-      previous_price: "$2169",
-      reviews: 0,
-      fps: 215,
-      link: "/system/Prebuilt-Gaming-PC-GLX-99622",
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
+      price: "$3379",
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 80,
+      fps: "315",
+      link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/PBET2018/ET99611/main_400.png",
+    },
+    {
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
+      price: "$3379",
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 30,
+      fps: "315",
+      link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/KING95/CS-448-300_400.png",
     },
   ];
+
+  const featurePcsList = [
+    {
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
+      price: "$3379",
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 100,
+      fps: "315",
+      link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/HYTEY60/CS-450-172_400.png?v22",
+    },
+    {
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
+      price: "$3379",
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 10,
+      fps: "315",
+      link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/Lumina/cs-450-194_400.png",
+    },
+    {
+      model: "Prebuilt Gaming PC GLX 99613",
+      specs: {
+        os: "Windows 11 Home",
+        cpu: {
+          name: "Intel® Core™ Processor i9-14900KF",
+          price: "$1000",
+          specs: ["3.20 GHz", "16 Cores", "32 Threads", "30MB Cache"],
+        },
+        videoCard: {
+          name: "GeForce RTX™ 4070 Ti SUPER  16GB GDDR6X Video Card",
+          price: "$2000",
+        },
+        ram: {
+          name: "32GB DDR5-6000MHz RAM",
+          price: "$500",
+        },
+        motherboard: {
+          name: "Z790 DDR5 Motherboard",
+          price: "$300",
+        },
+        ssd: {
+          name: "2TB PCIe NVMe GEN4 M.2 SSD",
+          price: "$200",
+        },
+      },
+      price: "$3379",
+      discounted_price: "$3429",
+      shipping_date: "4/30/2024",
+      reviews: 40,
+      fps: "315",
+      link: "/system/Prebuilt-Gaming-PC-GLX-99613",
+      imageUrl:
+        "https://www.cyberpowerpc.com/images/cs/cpnv5s/CS-450-190_400.png",
+    },
+  ];
+
   return (
     <main className="">
       <section>
@@ -160,25 +248,51 @@ export default function Home() {
       </section>
 
       <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold">Featured Desktops</h1>
+        <h1 className="max-sm:text-3xl text-4xl font-bold">
+          Featured Desktops
+        </h1>
         <div className="mt-5 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
+          {featurePcsList.map((pc, index) => (
+            <PcCard
+              key={pc.model}
+              title={pc.model}
+              specs={[
+                pc.specs.cpu.name,
+                pc.specs.videoCard.name,
+                pc.specs.ram.name,
+                pc.specs.motherboard.name,
+                pc.specs.ssd.name,
+              ]}
+              reviews={pc.reviews}
+              ratingStars={4}
+              imageUrl={pc.imageUrl}
+              count={index + 1}
+            />
+          ))}
         </div>
       </section>
       <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold">Popular Prebuilt Systems</h1>
+        <h1 className="max-sm:text-3xl text-4xl font-bold">
+          Popular Prebuilt Systems
+        </h1>
         <div className="mt-5 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
-          <PcCard />
+          {preBuiltPcList.map((pc, index) => (
+            <div key={index} className={`${index}`}>
+              <PcCard
+                title={pc.model}
+                specs={[
+                  pc.specs.cpu.name,
+                  pc.specs.videoCard.name,
+                  pc.specs.ram.name,
+                  pc.specs.motherboard.name,
+                  pc.specs.ssd.name,
+                ]}
+                reviews={pc.reviews}
+                ratingStars={4}
+                imageUrl={pc.imageUrl}
+              />
+            </div>
+          ))}
         </div>
       </section>
       <section className="mt-12">

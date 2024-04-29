@@ -73,7 +73,7 @@ export default function FeaturedCategories() {
             width={800}
             className="h-[220px] w-[220px]"
           />
-          <div className="px-4">
+          <div className="px-4 ">
             <h3 className="text-4xl font-bold">Performance Workstations</h3>
             <p className="text-md text-gray-600">
               Efficiently power through applications with our high-performance

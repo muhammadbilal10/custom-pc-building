@@ -11,34 +11,42 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-export default function PcCard() {
-  const pcImages = [
-    "https://www.cyberpowerpc.com/images/cs/Lumina/cs-450-194_400.png",
-    "https://www.cyberpowerpc.com/images/cs/syberm3/CS-192-303_400.png?v2",
-    "https://www.cyberpowerpc.com/images/cs/cpnv5s/CS-450-190_400.png",
-    "https://maingear.com/wp-content/uploads/apex-rush-rog-certified-apex.webp",
-    "https://www.cyberpowerpc.com//images/cs/PBET2018/et9799_auron242v/blk_400.png",
-  ];
+type PcCardProps = {
+  title: string;
+  specs: string[];
+  reviews: number;
+  ratingStars: number;
+  imageUrl: string;
+  count?: number;
+};
 
-  const title = "Prebuilt Gaming PC GLX 99613";
-  const specs = [
-    "Intel® Core™ Processor i7-14700KF",
-    "GeForce RTX™ 4060 Ti 16GB GDDR6 Video Card (DLSS 3.0) [AI-Powered Graphics]",
-    "32GB DDR5-6000MHz RAM",
-    "Z790 DDR5 Motherboard",
-    "2TB PCIe NVMe M.2 SSD",
-  ];
-
-  const reviews = 16 as number;
-  const ratingStars = 4 as number;
-
+export default function PcCard({
+  title,
+  specs,
+  reviews,
+  ratingStars,
+  imageUrl,
+  count,
+}: PcCardProps) {
+  // const pcImages = [
+  //   "https://www.cyberpowerpc.com/images/cs/Lumina/cs-450-194_400.png",
+  //   "https://www.cyberpowerpc.com/images/cs/syberm3/CS-192-303_400.png?v2",
+  //   "https://www.cyberpowerpc.com/images/cs/cpnv5s/CS-450-190_400.png",
+  //   "https://maingear.com/wp-content/uploads/apex-rush-rog-certified-apex.webp",
+  //   "https://www.cyberpowerpc.com//images/cs/PBET2018/et9799_auron242v/blk_400.png",
+  // ];
+  console.log(count);
   return (
-    <Card className="bg-[#f6f8f8] border-none rounded-none shadow-lg ">
+    <Card
+      className={` bg-[#f6f8f8] border-none rounded-none shadow-lg md:${
+        count ? "block" : "hidden"
+      }`}
+    >
       <Link href="/">
         <CardContent className="bg-[#f1f3f5] p-5">
           <Image
-            src={pcImages[4]}
-            alt="Picture of the author"
+            src={imageUrl}
+            alt="Picture of PC"
             width={500}
             height={500}
             className="w-[280px] h-[280px] mx-auto"
