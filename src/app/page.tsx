@@ -1,5 +1,7 @@
 import PcCard from "@/components/PC/PcCard";
 import { CarouselDemo, CustomCarousel } from "@/components/common/Carousel";
+import BuildGuides from "@/components/layout/BuildGuides";
+import FeaturedCategories from "@/components/layout/FeaturedCategories";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/layout/Hero";
 import Navbar from "@/components/layout/Navbar";
@@ -145,9 +147,18 @@ export default function Home() {
       <section>
         <Navbar />
       </section>
-      <section>
+      <section className="mt-16">
         <CustomCarousel images={backgroundImages} />
       </section>
+
+      <section className="mt-24 px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
+        <FeaturedCategories />
+      </section>
+
+      <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
+        <BuildGuides />
+      </section>
+
       <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
         <h1 className="text-4xl font-bold">Featured Desktops</h1>
         <div className="mt-5 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">

@@ -51,8 +51,8 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
   }, [currentIndex]);
 
   return (
-    <div className="relative">
-      <div className="relative text-white lg:min-h-screen flex items-center justify-center text-center ">
+    <div className="">
+      <div className="relative text-white lg:h-[650px] md:h-[500px] max-md:h-80 ">
         {images.map((img, index) => (
           <div
             key={img}
@@ -77,25 +77,25 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             services to our worldwide clients.
           </p>
         </div> */}
-      </div>
-      <div className="hidden md:block">
-        <div className="ml-10 absolute top-1/2 left-0 transform -translate-y-1/2">
-          <Button
-            onClick={goToPrevious}
-            variant="secondary"
-            className="rounded-full w-12 h-12"
-          >
-            <ChevronLeft size={20} />
-          </Button>
-        </div>
-        <div className="mr-10 absolute top-1/2 right-0 transform -translate-y-1/2">
-          <Button
-            onClick={goToNext}
-            variant="secondary"
-            className="rounded-full w-12 h-12"
-          >
-            <ChevronRight size={20} />
-          </Button>
+        <div className="">
+          <div className="absolute top-[85%] lg:top-[94%] left-[30%] lg:left-[45%] transform -translate-y-1/2">
+            <Button
+              onClick={goToPrevious}
+              variant="secondary"
+              className="rounded-full w-12 h-12"
+            >
+              <ChevronLeft size={20} />
+            </Button>
+          </div>
+          <div className=" absolute top-[85%] lg:top-[94%] right-[30%] lg:right-[45%] transform -translate-y-1/2">
+            <Button
+              onClick={goToNext}
+              variant="secondary"
+              className="rounded-full w-12 h-12"
+            >
+              <ChevronRight size={20} />
+            </Button>
+          </div>
         </div>
       </div>
     </div>

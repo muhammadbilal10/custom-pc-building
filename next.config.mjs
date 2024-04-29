@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "maingear.com",
       },
+      {
+        protocol: "https",
+        hostname: "demo-kalles-4-1.myshopify.com",
+      },
     ],
   },
 };
