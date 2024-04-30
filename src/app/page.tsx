@@ -1,5 +1,5 @@
 import PcCard from "@/components/PC/PcCard";
-import { CarouselDemo, CustomCarousel } from "@/components/common/Carousel";
+import { CustomCarousel } from "@/components/common/Carousel";
 import BuildGuides from "@/components/layout/BuildGuides";
 import FeaturedCategories from "@/components/layout/FeaturedCategories";
 import Footer from "@/components/layout/Footer";
@@ -233,9 +233,6 @@ export default function Home() {
   return (
     <main className="">
       <section>
-        <Navbar />
-      </section>
-      <section className="mt-16">
         <CustomCarousel images={backgroundImages} />
       </section>
 

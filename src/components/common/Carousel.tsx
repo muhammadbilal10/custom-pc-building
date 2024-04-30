@@ -12,9 +12,11 @@ import {
 import { Card, CardContent } from "../ui/card";
 import { ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface CustomCarouselProps {
   images: string[];
+  className?: string;
 }
 export function CustomCarousel({ images }: CustomCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -78,8 +80,8 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             selection, price comparisons, and compatibility. Craft your perfect
             machine today.
           </p>
-          <Button variant="ghost" className="mt-8 bg-white text-black">
-            Start Assembling Now
+          <Button asChild variant="ghost" className="mt-8 bg-white text-black">
+            <Link href="/list"> Start Assembling Now</Link>
           </Button>
         </div>
         <div className="">
@@ -118,45 +120,21 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
   );
 }
 
-export function CarouselDemo({ images }: CustomCarouselProps) {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-      console.log("selected prop");
-    });
-  }, [api]);
-
+export function ImageCarousel({ images, className }: CustomCarouselProps) {
   return (
-    <Carousel
-      setApi={setApi}
-      className="w-full max-w-7xl mx-auto min-h-[682px]"
-      opts={{
-        align: "start",
-        loop: true,
-      }}
-    >
-      <CarouselContent>
-        {images?.map((image, index) => (
+    <Carousel className="w-full">
+      <CarouselContent className="">
+        {images.map((img, index) => (
           <CarouselItem key={index} className="">
-            <div className="">
+            <div className="p-1 ">
               <Card className="">
-                <CardContent className="p-0 h-[682px]">
+                <CardContent className="p-8">
                   <Image
-                    src={image}
+                    src={img}
                     alt={`Slide ${index + 1}`}
-                    width={800}
                     height={800}
-                    className="w-full h-full "
+                    width={800}
+                    className="rounded-lg h-full w-full"
                   />
                 </CardContent>
               </Card>
@@ -164,12 +142,8 @@ export function CarouselDemo({ images }: CustomCarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-
-      <div className="py-2 text-center text-sm text-muted-foreground">
-        Slide {current} of {count}
-      </div>
+      <CarouselPrevious className="left-[5%]" />
+      <CarouselNext className="right-[5%]" />
     </Carousel>
   );
 }

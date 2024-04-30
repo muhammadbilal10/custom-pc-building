@@ -28,21 +28,9 @@ export default function PcCard({
   imageUrl,
   count,
 }: PcCardProps) {
-  // const pcImages = [
-  //   "https://www.cyberpowerpc.com/images/cs/Lumina/cs-450-194_400.png",
-  //   "https://www.cyberpowerpc.com/images/cs/syberm3/CS-192-303_400.png?v2",
-  //   "https://www.cyberpowerpc.com/images/cs/cpnv5s/CS-450-190_400.png",
-  //   "https://maingear.com/wp-content/uploads/apex-rush-rog-certified-apex.webp",
-  //   "https://www.cyberpowerpc.com//images/cs/PBET2018/et9799_auron242v/blk_400.png",
-  // ];
-  console.log(count);
   return (
-    <Card
-      className={` bg-[#f6f8f8] border-none rounded-none shadow-lg md:${
-        count ? "block" : "hidden"
-      }`}
-    >
-      <Link href="/">
+    <Card className={` bg-[#f6f8f8] border-none rounded-none shadow-lg `}>
+      <Link href="/system/1">
         <CardContent className="bg-[#f1f3f5] p-5">
           <Image
             src={imageUrl}
