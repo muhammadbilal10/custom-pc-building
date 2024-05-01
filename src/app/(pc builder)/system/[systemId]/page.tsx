@@ -108,7 +108,7 @@ export default async function SystemDetails({
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href="/systems">Systems</BreadcrumbLink>
+              <BreadcrumbLink href="/system">Systems</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

@@ -27,12 +27,12 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { loginFormSchema } from "@/lib/formSchema";
+import { registrationFormSchema } from "@/lib/formSchema";
 
-export default function LoginForm({}: {}) {
+export default function RegistrationForm() {
   // const [state, formAction] = useFormState(login, null);
-  const form = useForm<z.infer<typeof loginFormSchema>>({
-    resolver: zodResolver(loginFormSchema),
+  const form = useForm<z.infer<typeof registrationFormSchema>>({
+    resolver: zodResolver(registrationFormSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -40,24 +40,52 @@ export default function LoginForm({}: {}) {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
+  function onSubmit(values: z.infer<typeof registrationFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
     console.log(values);
   }
 
   return (
     <Card className="mx-auto max-w-sm">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-2xl">Sign Up</CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          Enter your information to create an account
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>First name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Muhammad" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Last name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Uzair" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="email"
@@ -85,36 +113,31 @@ export default function LoginForm({}: {}) {
                 <FormItem>
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
-                    <Link
-                      href="#"
-                      className="ml-auto inline-block text-sm underline"
-                    >
-                      Forgot your password?
-                    </Link>
                   </div>
 
                   <FormControl>
                     <Input type="password" placeholder="Password" {...field} />
                   </FormControl>
-                  {/* <FormDescription>
-                        This is your public display name.
-                      </FormDescription> */}
+                  <FormDescription>
+                    Your password should be at least 8 characters long and
+                    include a mix of letters, numbers, and special characters.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="w-full">
-              Login
+              Create an account
             </Button>
             <Button variant="outline" className="w-full">
-              Login with Google
+              Sign up with Google
             </Button>
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/registration" className="underline">
-            Sign up
+          Already have an account?{" "}
+          <Link href="/login" className="underline">
+            Sign in
           </Link>
         </div>
       </CardContent>

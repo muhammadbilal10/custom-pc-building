@@ -233,6 +233,9 @@ export default function Home() {
   return (
     <main className="">
       <section>
+        <Navbar />
+      </section>
+      <section>
         <CustomCarousel images={backgroundImages} />
       </section>
 

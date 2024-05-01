@@ -120,13 +120,16 @@ const Navbar = () => {
         ))}
       </div>
       <div className="flex items-center space-x-4">
-        {/* <Button className="max-sm:hidden" onClick={handleAddListing}>
-          Add Listing
-        </Button> */}
         <Search className="h-6 w-6" strokeWidth={1.1} />
-        <User className="h-6 w-6" strokeWidth={1.1} />
-        <Heart className="h-6 w-6" strokeWidth={1.1} />
-        <ShoppingCart className="h-6 w-6" strokeWidth={1.1} />
+        {/* <User className="h-6 w-6" strokeWidth={1.1} /> */}
+        <Button asChild className="" variant="ghost">
+          <Link href="/login">Log in</Link>
+        </Button>
+        <Button asChild className="">
+          <Link href="/registration">Sign up</Link>
+        </Button>
+        {/* <Heart className="h-6 w-6" strokeWidth={1.1} /> */}
+        {/* <ShoppingCart className="h-6 w-6" strokeWidth={1.1} /> */}
       </div>
     </div>
   );
