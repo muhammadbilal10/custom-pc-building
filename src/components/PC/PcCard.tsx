@@ -13,6 +13,7 @@ import Link from "next/link";
 
 type PcCardProps = {
   title: string;
+  os: string;
   specs: string[];
   reviews: number;
   ratingStars: number;
@@ -22,6 +23,7 @@ type PcCardProps = {
 
 export default function PcCard({
   title,
+  os,
   specs,
   reviews,
   ratingStars,
@@ -42,6 +44,7 @@ export default function PcCard({
         </CardContent>
         <CardHeader className="">
           <CardTitle className="line-clamp-1">{title}</CardTitle>
+          <h3 className="font-bold pt-4">{os}</h3>
           {specs.map((spec, index) => (
             <CardDescription key={index} className="line-clamp-1">
               {spec}

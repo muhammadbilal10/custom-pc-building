@@ -256,6 +256,7 @@ export default function Home() {
             <PcCard
               key={pc.model}
               title={pc.model}
+              os={pc.specs.os}
               specs={[
                 pc.specs.cpu.name,
                 pc.specs.videoCard.name,
@@ -280,6 +281,7 @@ export default function Home() {
             <div key={index} className={`${index}`}>
               <PcCard
                 title={pc.model}
+                os={pc.specs.os}
                 specs={[
                   pc.specs.cpu.name,
                   pc.specs.videoCard.name,

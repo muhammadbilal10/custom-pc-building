@@ -34,7 +34,7 @@ const Navbar = () => {
     { name: "Builder", href: "/", icon: Home },
     { name: "Products", href: "#", icon: Home },
     { name: "Guides", href: "#", icon: Handshake },
-    { name: "Completed Builds", href: "#", icon: BookText },
+    { name: "Completed Builds", href: "/system", icon: BookText },
     { name: "Contact", href: "#", icon: Phone },
   ];
 
