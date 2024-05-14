@@ -19,7 +19,7 @@ import { Label } from "../ui/label";
 import Link from "next/link";
 import Image from "next/image";
 
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import {
   Card,
   CardContent,
@@ -28,9 +28,28 @@ import {
   CardTitle,
 } from "../ui/card";
 import { registrationFormSchema } from "@/lib/formSchema";
+import { registration } from "@/server-actions/auth";
+import { Loader2, Triangle, TriangleAlert } from "lucide-react";
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit" className="w-full">
+      {!pending ? (
+        "Create an account"
+      ) : (
+        <>
+          <Loader2 className="animate-spin h-4 w-4" />
+          <span className="ml-2">Creating account...</span>
+        </>
+      )}
+    </Button>
+  );
+}
 
 export default function RegistrationForm() {
-  // const [state, formAction] = useFormState(login, null);
+  const [state, formAction] = useFormState(registration, null);
   const form = useForm<z.infer<typeof registrationFormSchema>>({
     resolver: zodResolver(registrationFormSchema),
     defaultValues: {
@@ -55,8 +74,24 @@ export default function RegistrationForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {state?.errors && (
+          <div className="bg-red-100 text-red-700 p-4 rounded-md mb-4">
+            <ul>
+              {Object.entries(state.errors).map(([key, value]) => (
+                <div className="flex items-center space-x-2">
+                  <TriangleAlert className="w-5 h-5 " />
+                  <li key={key}>{value}</li>
+                </div>
+              ))}
+            </ul>
+          </div>
+        )}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            action={formAction}
+            // onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -126,9 +161,7 @@ export default function RegistrationForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              Create an account
-            </Button>
+            <SubmitButton />
             <Button variant="outline" className="w-full">
               Sign up with Google
             </Button>

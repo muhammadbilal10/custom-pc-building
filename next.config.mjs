@@ -30,6 +30,22 @@ const nextConfig = {
         protocol: "https",
         hostname: "i.postimg.cc",
       },
+      {
+        protocol: "https",
+        hostname: "images.ctfassets.net",
+      },
+      {
+        protocol: "https",
+        hostname: "nzxt.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdna.pcpartpicker.com",
+      },
+      {
+        protocol: "https",
+        hostname: "placeholdit.img",
+      },
     ],
   },
 };

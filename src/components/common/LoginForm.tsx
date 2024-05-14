@@ -15,11 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "../ui/label";
 import Link from "next/link";
-import Image from "next/image";
 
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+
 import {
   Card,
   CardContent,
@@ -27,10 +26,33 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+
 import { loginFormSchema } from "@/lib/formSchema";
+import { login } from "@/server-actions/auth";
+import { useRef } from "react";
+import { Loader2 } from "lucide-react";
+
+export function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit" className="w-full">
+      {!pending ? (
+        "Login"
+      ) : (
+        <>
+          <Loader2 className="animate-spin h-4 w-4" />
+          <span className="ml-2">Logging in...</span>
+        </>
+      )}
+    </Button>
+  );
+}
 
 export default function LoginForm({}: {}) {
-  // const [state, formAction] = useFormState(login, null);
+  const [state, formAction] = useFormState(login, null);
+  const formRef = useRef<HTMLFormElement>(null);
+
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -38,14 +60,6 @@ export default function LoginForm({}: {}) {
       password: "",
     },
   });
-
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof loginFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
-    console.log(values);
-  }
 
   return (
     <Card className="mx-auto max-w-sm">
@@ -57,7 +71,12 @@ export default function LoginForm({}: {}) {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            // ref={formRef}
+            action={formAction}
+            // onSubmit={form.handleSubmit(() => formRef?.current?.submit())}
+            className="space-y-4"
+          >
             <FormField
               control={form.control}
               name="email"
@@ -92,7 +111,6 @@ export default function LoginForm({}: {}) {
                       Forgot your password?
                     </Link>
                   </div>
-
                   <FormControl>
                     <Input type="password" placeholder="Password" {...field} />
                   </FormControl>
@@ -103,9 +121,7 @@ export default function LoginForm({}: {}) {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full">
-              Login
-            </Button>
+            <SubmitButton />
             <Button variant="outline" className="w-full">
               Login with Google
             </Button>

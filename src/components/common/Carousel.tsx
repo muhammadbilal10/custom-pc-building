@@ -71,7 +71,7 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             />
           </div>
         ))}
-        <div className="lg:block hidden absolute z-50 p-5  w-[520px] top-[40%] m-7">
+        <div className="lg:block hidden absolute z-40 p-5  w-[520px] top-[40%] m-7">
           <h1 className="text-4xl font-bold">
             Design, Build, and Enhance Your Ideal PC
           </h1>

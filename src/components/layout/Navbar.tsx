@@ -26,16 +26,68 @@ import {
   ShoppingCart,
   User,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { ProfileDropDownMenu } from "./ProfileDropDownMenu";
+import { NavigationMenuDemo } from "../common/NavigationMenutCard";
+
+const components: {
+  title: string;
+  href: string;
+  description?: string;
+  image: string;
+}[] = [
+  {
+    title: "CPU",
+    href: "/product/cpus",
+    image: "https://cdna.pcpartpicker.com/static/forever/img/nav-cpu-2023.png",
+  },
+  {
+    title: "Storage",
+    href: "/product/Storage",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "Graphics Card",
+    href: "/product/graphics-cards",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "Power Supply",
+    href: "/product/power-supplies",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "Case",
+    href: "/product/cases",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "CPU Cooler",
+    href: "/product/cpu-coolers",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "Motherboard",
+    href: "/product/motherboards",
+    image: "https://placeholdit.img/100x100",
+  },
+  {
+    title: "Memory",
+    href: "/product/memory",
+    image: "https://placeholdit.img/100x100",
+  },
+];
 
 const Navbar = () => {
   const [isLoginOpen, setIsLoginOpen] = React.useState(false);
   const [isSignupOpen, setIsSignupOpen] = React.useState(false);
+  const { data: session } = useSession();
+
   const links = [
     { name: "Builder", href: "/", icon: Home },
     { name: "Products", href: "#", icon: Home },
     { name: "Guides", href: "#", icon: Handshake },
     { name: "Completed Builds", href: "/system", icon: BookText },
-    { name: "Contact", href: "#", icon: Phone },
   ];
 
   const handleAddListing = () => {
@@ -46,7 +98,7 @@ const Navbar = () => {
     }
   };
   return (
-    <div className="bg-white top-0 start-0 px-6 py-2 flex justify-between items-center h-16 shadow-lg fixed z-40  w-screen ">
+    <div className="bg-white top-0 start-0 px-6 py-2 flex justify-between items-center h-16 shadow-lg fixed z-50  w-screen ">
       <div className="rounded-lg p-2 max-lg:hidden">
         <Link href="/">
           <Image
@@ -113,21 +165,33 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center justify-center space-x-10 flex-1 max-lg:hidden">
-        {links.map((link, index) => (
-          <Button key={index} variant="ghost" className="text-sm">
-            <Link href={link.href}>{link.name}</Link>
-          </Button>
-        ))}
+        {links.map((link, index) =>
+          link.name !== "Products" ? (
+            <Button key={index} variant="ghost" className="text-sm">
+              <Link href={link.href}>{link.name}</Link>
+            </Button>
+          ) : (
+            <NavigationMenuDemo components={components} text="Products" />
+          )
+        )}
       </div>
       <div className="flex items-center space-x-4">
         <Search className="h-6 w-6" strokeWidth={1.1} />
         {/* <User className="h-6 w-6" strokeWidth={1.1} /> */}
-        <Button asChild className="" variant="ghost">
-          <Link href="/login">Log in</Link>
-        </Button>
-        <Button asChild className="">
-          <Link href="/registration">Sign up</Link>
-        </Button>
+
+        {session?.user ? (
+          <ProfileDropDownMenu />
+        ) : (
+          <>
+            <Button asChild className="" variant="ghost">
+              <Link href="/login">Log in</Link>
+            </Button>
+            <Button asChild className="">
+              <Link href="/registration">Sign up</Link>
+            </Button>
+          </>
+        )}
+
         {/* <Heart className="h-6 w-6" strokeWidth={1.1} /> */}
         {/* <ShoppingCart className="h-6 w-6" strokeWidth={1.1} /> */}
       </div>
