@@ -15,7 +15,7 @@ export async function AuthWrapper({
     };
   }
   return (
-    <SessionProvider basePath={BASE_PATH} session={session}>
+    <SessionProvider>
       <>{children}</>
     </SessionProvider>
   );

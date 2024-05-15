@@ -162,9 +162,9 @@ export default function RegistrationForm() {
               )}
             />
             <SubmitButton />
-            <Button variant="outline" className="w-full">
+            {/* <Button variant="outline" className="w-full">
               Sign up with Google
-            </Button>
+            </Button> */}
           </form>
         </Form>
         <div className="mt-4 text-center text-sm">

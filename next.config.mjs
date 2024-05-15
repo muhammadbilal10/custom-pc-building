@@ -46,6 +46,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "placeholdit.img",
       },
+      {
+        protocol: "https",
+        hostname: "static.pcbuilder.net",
+      },
     ],
   },
 };

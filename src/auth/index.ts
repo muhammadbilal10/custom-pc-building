@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { getUser } from "@/server-actions/user";
 import { UserDocument } from "@/models/user";
 
-export const BASE_PATH = "/login";
+export const BASE_PATH = "/";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -22,9 +22,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           );
 
           if (!user) {
+            console.log("User not found");
             throw new Error("User not found.");
           }
-          console.log("User found", user);
           return user;
         } catch (error) {
           console.log("Error in authorize", error);
@@ -33,4 +33,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
+  },
 });

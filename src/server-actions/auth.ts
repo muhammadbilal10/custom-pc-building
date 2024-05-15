@@ -6,23 +6,25 @@ import { loginFormSchema, registrationFormSchema } from "@/lib/formSchema";
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function login(prevState: any, formData: FormData) {
   try {
-    await signIn("credentials", formData);
-    console.log("User signed in");
+    const user = await signIn("credentials", formData);
+    // console.log("user", user);
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid email or password";
+          return { error: "Invalid email or password" };
         default:
-          return "Something went wrong";
+          return { error: "Something went wrong" };
       }
       throw error;
     }
   }
+  redirect("/");
 }
 
 export async function registration(prevState: any, formData: FormData) {

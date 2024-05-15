@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import PcComponetCard from "@/components/PC/PcComponetCard";
 import BreadCrumb from "@/components/layout/BreadCrumb";
 import PcComponentFilter from "@/components/layout/PcComponentFilter";
@@ -116,6 +117,8 @@ export default async function ProductPage({
   console.log(params.productCategory);
   const productCategory = params.productCategory;
   const productData = await getProductData(productCategory);
+  const user = await auth();
+  console.log(user);
 
   return (
     <div className="pt-4">

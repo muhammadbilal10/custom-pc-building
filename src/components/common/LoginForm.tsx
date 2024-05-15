@@ -30,7 +30,7 @@ import {
 import { loginFormSchema } from "@/lib/formSchema";
 import { login } from "@/server-actions/auth";
 import { useRef } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, TriangleAlert } from "lucide-react";
 
 export function SubmitButton() {
   const { pending } = useFormStatus();
@@ -70,12 +70,23 @@ export default function LoginForm({}: {}) {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {state?.error && (
+          <div className="bg-red-100 text-red-700 p-4 rounded-md mb-4">
+            <ul>
+              <div className="flex items-center space-x-2">
+                <TriangleAlert className="w-5 h-5 " />
+                <li>{state?.error}</li>
+              </div>
+            </ul>
+          </div>
+        )}
+
         <Form {...form}>
           <form
             // ref={formRef}
             action={formAction}
             // onSubmit={form.handleSubmit(() => formRef?.current?.submit())}
-            className="space-y-4"
+            className="space-y-6"
           >
             <FormField
               control={form.control}
@@ -104,12 +115,12 @@ export default function LoginForm({}: {}) {
                 <FormItem>
                   <div className="flex items-center">
                     <FormLabel>Password</FormLabel>
-                    <Link
+                    {/* <Link
                       href="#"
                       className="ml-auto inline-block text-sm underline"
                     >
                       Forgot your password?
-                    </Link>
+                    </Link> */}
                   </div>
                   <FormControl>
                     <Input type="password" placeholder="Password" {...field} />
@@ -122,12 +133,12 @@ export default function LoginForm({}: {}) {
               )}
             />
             <SubmitButton />
-            <Button variant="outline" className="w-full">
+            {/* <Button variant="outline" className="w-full">
               Login with Google
-            </Button>
+            </Button> */}
           </form>
         </Form>
-        <div className="mt-4 text-center text-sm">
+        <div className="mt-10 text-center text-sm">
           Don&apos;t have an account?{" "}
           <Link href="/registration" className="underline">
             Sign up

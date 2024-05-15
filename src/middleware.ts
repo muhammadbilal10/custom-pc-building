@@ -5,7 +5,11 @@ export const config = {
 };
 
 export default auth((req) => {
-  const reqUrl = new URL(req.url);
+  // const reqUrl = new URL(req.url);
+  // if (!req.auth) {
+  //   const url = req.url.replace("/login", req.nextUrl.pathname);
+  //   return Response.redirect(url);
+  // }
   // if (!req.auth && reqUrl?.pathname !== "/") {
   //   const url = req.url.replace(req.nextUrl.pathname, "/login");
   //   return Response.redirect(url);

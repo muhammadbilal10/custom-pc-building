@@ -1,5 +1,7 @@
 import PcAddComponentCard from "@/components/PC/PcAddComponentCard";
 import PcCard from "@/components/PC/PcCard";
+import PcComponetCard from "@/components/PC/PcComponetCard";
+import BreadCrumb from "@/components/layout/BreadCrumb";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 
 const components = [
   {
@@ -42,19 +45,20 @@ const productData = {
 
 export default function ListPage() {
   return (
-    <div>
+    <div className="pt-4">
       <div className="mb-8  bg-gray-100 py-4">
-        <Breadcrumb className="max-w-7xl mx-auto px-3">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">Home</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/system">{`Completed Builds`}</BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <BreadCrumb
+          breadcrumbList={[
+            {
+              text: "Home",
+              link: "/",
+            },
+            {
+              text: "PC Builder",
+              link: "/list",
+            },
+          ]}
+        />
       </div>
       <div className="max-w-7xl mx-auto space-y-4">
         <div>
@@ -65,15 +69,21 @@ export default function ListPage() {
         </div>
         <div className="flex justify-between items-center">
           <h2 className="text-4xl uppercase font-bold">Processor</h2>
-          <Plus size={48} />
+          <Link href="/product/processor">
+            <Plus size={48} />
+          </Link>
         </div>
-        {/* <PcAddComponentCard {...productData} /> */}
-        {/* <PcCard
-          title={productData.name}
-          specs={[]}
-          reviews={4}
-          imageUrl={productData.image}
-        /> */}
+        <div className="max-w-md">
+          <PcComponetCard
+            title={productData.name}
+            imageUrl={productData.image}
+            buyLink={productData.productLink}
+            reviews={456}
+            ratingStars={4}
+            specs={["8 Cores", "16 Threads", "3.8 GHz (up to 4.7 GHz)"]}
+            os="Windows 10"
+          />
+        </div>
       </div>
     </div>
   );

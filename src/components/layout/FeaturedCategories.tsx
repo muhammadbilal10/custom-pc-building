@@ -50,7 +50,7 @@ export default function FeaturedCategories() {
             width={800}
             className="h-full w-full"
           />
-          <div className="absolute z-50   top-[10%] text-center text-white w-full">
+          <div className="absolute z-30   top-[10%] text-center text-white w-full">
             <h3 className="text-2xl md:text-4xl font-bold text-white">
               PreBuilt Gaming PCs
             </h3>
@@ -59,7 +59,7 @@ export default function FeaturedCategories() {
               speed and graphics without the build hassle.
             </p>
             <Button asChild className="mt-8" variant="secondary">
-              <Link href="/system/Prebuilt-Gaming-PC-GLX-99622" className="">
+              <Link href="/system" className="">
                 Buy Now
               </Link>
             </Button>
@@ -115,7 +115,7 @@ export default function FeaturedCategories() {
             width={800}
             className="h-full w-full"
           />
-          <div className="absolute z-50   top-[10%] text-center text-white w-full">
+          <div className="absolute z-30   top-[10%] text-center text-white w-full">
             <h3 className="text-2xl md:text-4xl font-bold text-white">
               Completed Build PCs
             </h3>
@@ -124,7 +124,7 @@ export default function FeaturedCategories() {
               part list, photos and overall build experience.
             </p>
             <Button asChild className="mt-8" variant="secondary">
-              <Link href="/system/Prebuilt-Gaming-PC-GLX-99622" className="">
+              <Link href="/system" className="">
                 Buy Now
               </Link>
             </Button>

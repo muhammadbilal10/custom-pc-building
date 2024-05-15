@@ -13,7 +13,6 @@ async function getData(): Promise<Product[]> {
         "https://www.amazon.com/AMD-Ryzen-5950X-16-Core-Processor/dp/B0815XFSGK",
       addProduct: "Add to Cart",
     },
-    // ...
   ];
 }
 

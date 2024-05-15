@@ -166,14 +166,11 @@ export default async function SystemPage() {
                   count={index + 1}
                 />
               ))}
-            </div>
-          </section>
-          <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
-            <div className="mt-5 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
               {systemData.map((pc, index) => (
                 <PcCard
                   key={pc.model}
                   title={pc.model}
+                  os={pc.specs.os}
                   specs={[
                     pc.specs.cpu.name,
                     pc.specs.videoCard.name,
@@ -181,7 +178,6 @@ export default async function SystemPage() {
                     pc.specs.motherboard.name,
                     pc.specs.ssd.name,
                   ]}
-                  os={pc.specs.os}
                   reviews={pc.reviews}
                   ratingStars={4}
                   imageUrl={pc.imageUrl}

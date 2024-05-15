@@ -44,37 +44,42 @@ const components: {
   {
     title: "Storage",
     href: "/product/Storage",
-    image: "https://placeholdit.img/100x100",
+    image: "https://cdna.pcpartpicker.com/static/forever/img/nav-ssd-2023.png",
   },
   {
     title: "Graphics Card",
     href: "/product/graphics-cards",
-    image: "https://placeholdit.img/100x100",
+    image:
+      "https://cdna.pcpartpicker.com/static/forever/img/nav-videocard-2023.png",
   },
   {
     title: "Power Supply",
     href: "/product/power-supplies",
-    image: "https://placeholdit.img/100x100",
+    image:
+      "https://cdna.pcpartpicker.com/static/forever/img/nav-powersupply-2023.png",
   },
   {
     title: "Case",
     href: "/product/cases",
-    image: "https://placeholdit.img/100x100",
+    image: "https://cdna.pcpartpicker.com/static/forever/img/nav-case-2023.png",
   },
   {
     title: "CPU Cooler",
     href: "/product/cpu-coolers",
-    image: "https://placeholdit.img/100x100",
+    image:
+      "https://cdna.pcpartpicker.com/static/forever/img/nav-cpucooler-2023.png",
   },
   {
     title: "Motherboard",
     href: "/product/motherboards",
-    image: "https://placeholdit.img/100x100",
+    image:
+      "https://cdna.pcpartpicker.com/static/forever/img/nav-motherboard-2023.png",
   },
   {
     title: "Memory",
     href: "/product/memory",
-    image: "https://placeholdit.img/100x100",
+    image:
+      "https://cdna.pcpartpicker.com/static/forever/img/nav-memory-2023.png",
   },
 ];
 
@@ -84,11 +89,13 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   const links = [
-    { name: "Builder", href: "/", icon: Home },
+    { name: "Builder", href: "/list", icon: Home },
     { name: "Products", href: "#", icon: Home },
     { name: "Guides", href: "#", icon: Handshake },
     { name: "Completed Builds", href: "/system", icon: BookText },
   ];
+
+  React.useEffect(() => {}, [session]);
 
   const handleAddListing = () => {
     const isLogin = false;
@@ -176,7 +183,7 @@ const Navbar = () => {
         )}
       </div>
       <div className="flex items-center space-x-4">
-        <Search className="h-6 w-6" strokeWidth={1.1} />
+        {/* <Search className="h-6 w-6" strokeWidth={1.1} /> */}
         {/* <User className="h-6 w-6" strokeWidth={1.1} /> */}
 
         {session?.user ? (

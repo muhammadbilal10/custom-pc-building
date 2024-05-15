@@ -249,7 +249,7 @@ export default function Home() {
 
       <section className="px-3 my-12 sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto">
         <h1 className="max-sm:text-3xl text-4xl font-bold">
-          Featured Desktops
+          Featured Custombuilt Systems
         </h1>
         <div className="mt-5 grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {featurePcsList.map((pc, index) => (
