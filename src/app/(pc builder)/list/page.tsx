@@ -60,9 +60,11 @@ export default function ListPage() {
           ]}
         />
       </div>
-      <div className="max-w-7xl mx-auto space-y-4">
+      <div className="px-3 xl:max-w-[1400px] mx-auto sm:max-w-xl md:max-w-3xl lg:max-w-5xl space-y-4">
         <div>
-          <h1 className="text-4xl font-semibold">Build Your PC</h1>
+          <h1 className="text-4xl font-semibold max-sm:text-3xl">
+            Build Your PC
+          </h1>
           <p className="text-gray-500">
             Start by selecting the components you want to add to your build.
           </p>

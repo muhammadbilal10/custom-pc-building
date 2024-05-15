@@ -6,27 +6,27 @@ export default function Footer() {
   const socials = [
     {
       name: "Instagram",
-      link: "https://www.instagram.com/bilalsaddique09/?hl=en",
+      link: "#",
       icon: <Instagram />,
     },
     {
       name: "Linkedin",
-      link: "https://www.linkedin.com/in/muhammad-bilal-9b6b9a1b3/",
+      link: "#",
       icon: <Linkedin />,
     },
     {
       name: "Github",
-      link: "https://github.com/muhammadbilal10",
+      link: "#",
       icon: <Github />,
     },
     {
-      name: "Twitter",
+      name: "#",
       link: "",
       icon: <Twitter />,
     },
     {
       name: "Youtube",
-      link: "",
+      link: "#",
       icon: <Youtube />,
     },
   ];

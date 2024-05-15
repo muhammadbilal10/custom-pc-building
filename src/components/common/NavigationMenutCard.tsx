@@ -77,7 +77,7 @@ export function NavigationMenuDemo({
         <NavigationMenuItem>
           <NavigationMenuTrigger>{text}</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-4 lg:w-[900px] ">
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-4 lg:w-[850px] ">
               {components.map((component) => (
                 <ListItem
                   key={component.title}
