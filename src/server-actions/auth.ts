@@ -53,6 +53,9 @@ export async function registration(prevState: any, formData: FormData) {
       return {
         errors: {
           email: "email already exists",
+          firstName: "",
+          lastName: "",
+          password: null,
         },
       };
     }

@@ -74,18 +74,6 @@ export default function RegistrationForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {state?.errors && (
-          <div className="bg-red-100 text-red-700 p-4 rounded-md mb-4">
-            <ul>
-              {Object.entries(state.errors).map(([key, value]) => (
-                <div className="flex items-center space-x-2">
-                  <TriangleAlert className="w-5 h-5 " />
-                  <li key={key}>{value}</li>
-                </div>
-              ))}
-            </ul>
-          </div>
-        )}
         <Form {...form}>
           <form
             action={formAction}
@@ -100,9 +88,19 @@ export default function RegistrationForm() {
                   <FormItem>
                     <FormLabel>First name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Muhammad" {...field} />
+                      <Input placeholder="Muhammad" {...field} required />
                     </FormControl>
                     <FormMessage />
+                    <FormDescription>
+                      {state?.errors?.lastName && (
+                        <div className="col-span-2 mt-1">
+                          <div className=" text-red-700 p-1 rounded-md flex items-start space-x-1">
+                            <TriangleAlert className="mt-1 w-4 h-4" />
+                            <span>{state.errors.lastName}</span>
+                          </div>
+                        </div>
+                      )}
+                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -114,33 +112,54 @@ export default function RegistrationForm() {
                   <FormItem>
                     <FormLabel>Last name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Uzair" {...field} />
+                      <Input placeholder="Uzair" {...field} required />
                     </FormControl>
                     <FormMessage />
+                    <FormDescription>
+                      {state?.errors?.lastName && (
+                        <div className="col-span-2 mt-1">
+                          <div className=" text-red-700 p-1 rounded-md flex items-start space-x-1">
+                            <TriangleAlert className="mt-1 w-4 h-4" />
+                            <span>{state.errors.lastName}</span>
+                          </div>
+                        </div>
+                      )}
+                    </FormDescription>
                   </FormItem>
                 )}
               />
             </div>
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder="johndoe@example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
+            <div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="johndoe@example.com"
+                        {...field}
+                        required
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
                         This is your public display name.
                       </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {state?.errors?.email && (
+                <div className="col-span-2 mt-1">
+                  <div className=" text-red-700 p-1 rounded-md mb-4 flex items-center space-x-1">
+                    <TriangleAlert className="w-4 h-4" />
+                    <span>{state.errors.email}</span>
+                  </div>
+                </div>
               )}
-            />
+            </div>
             <FormField
               control={form.control}
               name="password"
@@ -151,8 +170,23 @@ export default function RegistrationForm() {
                   </div>
 
                   <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      {...field}
+                      required
+                    />
                   </FormControl>
+                  <div>
+                    {state?.errors?.password && (
+                      <div className="col-span-2 mt-1">
+                        <div className=" text-red-700 p-1 rounded-md flex items-start space-x-1">
+                          <TriangleAlert className="mt-1 w-4 h-4" />
+                          <span>{state.errors.password[0]}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <FormDescription>
                     Your password should be at least 8 characters long and
                     include a mix of letters, numbers, and special characters.

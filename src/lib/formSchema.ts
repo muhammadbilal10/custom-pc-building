@@ -9,10 +9,10 @@ export const loginFormSchema = z.object({
 
 export const registrationFormSchema = z.object({
   firstName: z.string().min(3, {
-    message: "First must be at least 3 characters long",
+    message: "must be at least 3 ch",
   }),
   lastName: z.string().min(3, {
-    message: "Last name must be at least 3 characters long",
+    message: "must be at least 3 ch",
   }),
   email: z.string().email(),
   password: z

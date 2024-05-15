@@ -13,6 +13,7 @@ import { Card, CardContent } from "../ui/card";
 import { ChevronLeft, ChevronRight, Circle } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { Modal } from "./Modal";
 
 interface CustomCarouselProps {
   images: string[];
@@ -80,9 +81,11 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
             selection, price comparisons, and compatibility. Craft your perfect
             machine today.
           </p>
-          <Button asChild variant="ghost" className="mt-8 bg-white text-black">
-            <Link href="/list"> Start Assembling Now</Link>
-          </Button>
+          <Modal>
+            <Button variant="ghost" className="mt-8 bg-white text-black">
+              Start Assembling Now
+            </Button>
+          </Modal>
         </div>
         <div className="">
           <div className="absolute top-[85%] lg:top-[94%] left-[30%] lg:left-[45%] transform -translate-y-1/2">
@@ -114,7 +117,9 @@ export function CustomCarousel({ images }: CustomCarouselProps) {
           selection, price comparisons, and compatibility. Craft your perfect
           machine today.
         </p>
-        <Button className="mt-8 ">Start Assembling Now</Button>
+        <Modal>
+          <Button className="mt-8 ">Start Assembling Now</Button>
+        </Modal>
       </div>
     </div>
   );
