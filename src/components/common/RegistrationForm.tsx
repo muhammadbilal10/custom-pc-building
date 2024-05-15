@@ -92,11 +92,11 @@ export default function RegistrationForm() {
                     </FormControl>
                     <FormMessage />
                     <FormDescription>
-                      {state?.errors?.lastName && (
+                      {state?.errors?.firstName && (
                         <div className="col-span-2 mt-1">
                           <div className=" text-red-700 p-1 rounded-md flex items-start space-x-1">
                             <TriangleAlert className="mt-1 w-4 h-4" />
-                            <span>{state.errors.lastName}</span>
+                            <span>{state.errors.firstName}</span>
                           </div>
                         </div>
                       )}
