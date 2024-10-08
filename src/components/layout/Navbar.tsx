@@ -29,6 +29,7 @@ import {
 import { useSession } from "next-auth/react";
 import { ProfileDropDownMenu } from "./ProfileDropDownMenu";
 import { NavigationMenuDemo } from "../common/NavigationMenutCard";
+import { Modal } from "../common/Modal";
 
 const components: {
   title: string;
@@ -89,10 +90,8 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   const links = [
-    { name: "Builder", href: "/list", icon: Home },
     { name: "Products", href: "#", icon: Home },
     { name: "Guides", href: "/build-guide", icon: Handshake },
-    { name: "Completed Builds", href: "/system", icon: BookText },
   ];
 
   React.useEffect(() => {}, [session]);
@@ -172,6 +171,11 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center justify-center space-x-10 flex-1 max-lg:hidden">
+        <Modal>
+          <Button variant="ghost" className="text-sm">
+            Build
+          </Button>
+        </Modal>
         {links.map((link, index) =>
           link.name !== "Products" ? (
             <Button key={index} variant="ghost" className="text-sm">
