@@ -109,7 +109,12 @@ export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
                 <Label htmlFor="name" className="text-right">
                   Name
                 </Label>
-                <Input id="name" name="buildName" className="col-span-3" />
+                <Input
+                  id="name"
+                  name="buildName"
+                  className="col-span-3"
+                  required
+                />
 
                 <input
                   type="hidden"

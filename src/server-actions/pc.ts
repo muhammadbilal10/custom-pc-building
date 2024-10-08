@@ -57,14 +57,23 @@ export async function getComponents(): Promise<ComponentResponse> {
 export async function fetchComponentsByCategory(category: string) {
   try {
     await connectToDB();
-    const components = await Product.find({ category });
-    return components;
+    const components = await Product.find({ category }).lean();
+    const typedComponents: Component[] = components.map((component: any) => ({
+      _id: component._id.toString(),
+      name: component.name,
+      description: component.description,
+      price: component.price,
+      vendor: component.vendor,
+      sold_out: component.sold_out,
+      image_url: component.image_url,
+      category: component.category,
+      createdAt: component.createdAt,
+      updatedAt: component.updatedAt,
+    }));
+    return typedComponents;
   } catch (e) {
     console.error(e);
-    return {
-      success: false,
-      message: "Failed to fetch components",
-    };
+    return [];
   }
 }
 

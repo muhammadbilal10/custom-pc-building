@@ -11,15 +11,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
+// Add this constant at the top of the file, outside the component
+const FALLBACK_IMAGE_URL = "/path/to/fallback-image.jpg"; // Replace with an actual fallback image path
+
 type PcComponetCardProps = {
   title: string;
-  os: string;
-  specs: string[];
-  reviews: number;
-  ratingStars: number;
+  os?: string;
+  specs?: string[];
+  reviews?: number;
+  ratingStars?: number;
   imageUrl: string;
-
-  buyLink: string;
+  price?: string;
+  buyLink?: string;
 };
 
 export default function PcComponetCard({
@@ -27,20 +30,29 @@ export default function PcComponetCard({
   os,
   specs,
   reviews,
-  ratingStars,
+  ratingStars = 0,
+  price,
   imageUrl,
   buyLink,
 }: PcComponetCardProps) {
+  // Add this function to validate the image URL
+  const getValidImageUrl = (url: string) => {
+    if (url && (url.startsWith("/") || url.startsWith("http"))) {
+      return url;
+    }
+    return FALLBACK_IMAGE_URL;
+  };
+
   return (
     <Card className={` bg-[#f6f8f8] border-none rounded-none shadow-lg `}>
       <Link href="#">
         <CardContent className="bg-[#f1f3f5] p-5">
           <Image
-            src={imageUrl}
-            alt="Picture of PC"
-            width={500}
-            height={500}
-            className="w-[280px] h-[280px] mx-auto"
+            src={getValidImageUrl(imageUrl)}
+            alt={`Picture of ${title}`}
+            width={280}
+            height={280}
+            className="w-[280px] h-[280px] mx-auto object-cover"
           />
         </CardContent>
         <CardHeader className="">
@@ -63,21 +75,21 @@ export default function PcComponetCard({
                 />
               ))}
             </div>
-            <p className="text-sm font-bold ">
+            {/* <p className="text-sm font-bold ">
               {reviews}
               <span className="ml-2 font-light text-muted-foreground">
                 Reviews
               </span>
-            </p>
+            </p> */}
           </div>
           <div className="mt-2 w-full flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="text-sm text-muted-foreground line-through">
-                $1579
-              </div>
-              <div className="text-lg font-bold">$1529</div>
+              {/* <div className="text-sm text-muted-foreground line-through">
+                {price}
+              </div> */}
+              <div className="text-lg font-bold">{price}</div>
             </div>
-            <Button className="">Buy Now</Button>
+            {/* <Button className="">Buy Now</Button> */}
           </div>
         </CardFooter>
       </Link>

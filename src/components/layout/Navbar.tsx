@@ -38,46 +38,46 @@ const components: {
 }[] = [
   {
     title: "CPU",
-    href: "/product/cpus",
+    href: "/components/Processors",
     image: "https://cdna.pcpartpicker.com/static/forever/img/nav-cpu-2023.png",
   },
   {
     title: "Storage",
-    href: "/product/Storage",
+    href: "/components/Storage",
     image: "https://cdna.pcpartpicker.com/static/forever/img/nav-ssd-2023.png",
   },
   {
     title: "Graphics Card",
-    href: "/product/graphics-cards",
+    href: "/components/Graphics Cards",
     image:
       "https://cdna.pcpartpicker.com/static/forever/img/nav-videocard-2023.png",
   },
   {
     title: "Power Supply",
-    href: "/product/power-supplies",
+    href: "/components/Power Supplies",
     image:
       "https://cdna.pcpartpicker.com/static/forever/img/nav-powersupply-2023.png",
   },
   {
     title: "Case",
-    href: "/product/cases",
+    href: "/components/Cases",
     image: "https://cdna.pcpartpicker.com/static/forever/img/nav-case-2023.png",
   },
   {
     title: "CPU Cooler",
-    href: "/product/cpu-coolers",
+    href: "/components/Cooling",
     image:
       "https://cdna.pcpartpicker.com/static/forever/img/nav-cpucooler-2023.png",
   },
   {
     title: "Motherboard",
-    href: "/product/motherboards",
+    href: "/components/Motherboards",
     image:
       "https://cdna.pcpartpicker.com/static/forever/img/nav-motherboard-2023.png",
   },
   {
     title: "Memory",
-    href: "/product/memory",
+    href: "/components/Memory",
     image:
       "https://cdna.pcpartpicker.com/static/forever/img/nav-memory-2023.png",
   },

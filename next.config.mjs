@@ -50,6 +50,22 @@ const nextConfig = {
         protocol: "https",
         hostname: "static.pcbuilder.net",
       },
+      {
+        protocol: "https",
+        hostname: "pcfanatics.pk",
+      },
+      {
+        protocol: "https",
+        hostname: "www.pakdukaan.com",
+      },
+      {
+        protocol: "http",
+        hostname: "www.texonware.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.texonware.com",
+      },
     ],
   },
 };

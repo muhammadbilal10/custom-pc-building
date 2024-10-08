@@ -66,6 +66,11 @@ export const componentCategories: Category[] = [
     description: "Provides power to all computer components",
   },
   {
+    name: "Graphics Cards",
+    icon: Power,
+    description: "Provides power to all computer components",
+  },
+  {
     name: "Other",
     icon: Power,
     description: "Provides power to all computer components",
