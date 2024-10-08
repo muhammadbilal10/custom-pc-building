@@ -91,7 +91,7 @@ const Navbar = () => {
   const links = [
     { name: "Builder", href: "/list", icon: Home },
     { name: "Products", href: "#", icon: Home },
-    { name: "Guides", href: "#", icon: Handshake },
+    { name: "Guides", href: "/build-guide", icon: Handshake },
     { name: "Completed Builds", href: "/system", icon: BookText },
   ];
 

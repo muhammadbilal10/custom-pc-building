@@ -1,16 +1,27 @@
-import { getUserAllBuilds } from "@/server-actions/pc";
-import React from "react";
+import { Suspense } from "react";
+import { PCBuildList } from "@/components/pc-builder/pc-build-list";
+import { PCBuildSearch } from "@/components/pc-builder/pc-build-search";
 
-export default async function UserListPage() {
-  const getAllUserCompletedBuilds = await getUserAllBuilds();
+export const metadata = {
+  title: "PC Build List",
+  description: "View and search your PC builds",
+};
 
-  if (!getAllUserCompletedBuilds.success) {
-    return <div>Error: {getAllUserCompletedBuilds.message}</div>;
-  }
-
-  const builds = getAllUserCompletedBuilds.builds;
-
-  console.log(builds);
-
-  return <div>UserListPage</div>;
+export default function PCBuildListPage() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="space-y-2 mb-10">
+        <h1 className="text-3xl font-bold tracking-tight">
+          Your Custom PC Builds
+        </h1>
+        <p className="text-muted-foreground">
+          Explore your custom PC builds and manage them.
+        </p>
+      </div>
+      {/* <PCBuildSearch /> */}
+      <Suspense fallback={<div>Loading builds...</div>}>
+        <PCBuildList />
+      </Suspense>
+    </div>
+  );
 }

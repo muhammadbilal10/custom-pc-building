@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IBuild extends Document {
   userId: mongoose.Schema.Types.ObjectId;
+  name: string;
   components: Record<string, any>;
   totalPrice: number;
   createdAt: Date;
@@ -14,6 +15,10 @@ const BuildSchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
+    },
+    name: {
+      type: String,
+      required: true,
     },
     components: {
       type: Map,

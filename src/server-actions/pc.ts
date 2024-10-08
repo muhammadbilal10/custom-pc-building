@@ -100,10 +100,14 @@ export async function completeBuild(prevState: any, formData: FormData) {
 
     const componentsJson = formData.get("components") as string;
     const totalPrice = formData.get("totalPrice") as string;
+    const buildName = formData.get("buildName") as string;
     const components = JSON.parse(componentsJson);
+
+    console.log(buildName);
 
     const newBuild = new Build({
       userId: user.id,
+      name: buildName,
       components: components,
       totalPrice: totalPrice,
     });
@@ -137,6 +141,7 @@ export async function getUserAllBuilds() {
     const typedBuilds = builds.map((build: any) => ({
       _id: build._id.toString(),
       userId: build.userId.toString(),
+      name: build.name,
       components: build.components,
       totalPrice: build.totalPrice,
     }));
@@ -144,13 +149,46 @@ export async function getUserAllBuilds() {
     return {
       success: true,
       message: "Builds fetched successfully",
-      builds: typedBuilds,
+      builds: typedBuilds || [],
     };
   } catch (error) {
     console.error("Error getting user builds:", error);
     return { success: false, message: "Failed to get user builds" };
   }
 }
+
+// delete a user build
+export async function deleteUserBuild(prevState: any, formData: FormData) {
+  try {
+    await connectToDB();
+    const session = await auth();
+    if (!session || !session.user) {
+      return { success: false, message: "User not authenticated" };
+    }
+    const id = formData.get("id") as string;
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    const build = await Build.findOne({ _id: id, userId: user.id });
+    if (!build) {
+      return {
+        success: false,
+        message: "Build not found or not owned by user",
+      };
+    }
+
+    await Build.findByIdAndDelete(id);
+    revalidatePath("/user-list");
+    return { success: true, message: "Build deleted successfully" };
+  } catch (error) {
+    console.error("Error deleting build:", error);
+    return { success: false, message: "Failed to delete build" };
+  }
+}
+
 function calculateTotalPrice(components: Record<string, any>): number {
   return Object.values(components).reduce(
     (total, component) => total + component.price,

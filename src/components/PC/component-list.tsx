@@ -61,7 +61,7 @@ export function ComponentList({
           >
             <CardHeader>
               <CardTitle className="">{component.name}</CardTitle>
-              <CardDescription className="">${component.price}</CardDescription>
+              <CardDescription className="">{component.price}</CardDescription>
             </CardHeader>
             <CardContent>
               <p>{component.description}</p>

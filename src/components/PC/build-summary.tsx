@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Component } from "@/types/component";
-import { sumPrices, formatPrice, parsePrice } from "@/utils/priceUtils";
+import { sumPrices, formatPrice } from "@/utils/priceUtils";
 import { componentCategories } from "@/constant";
 import { completeBuild } from "@/server-actions/pc";
 import { useFormState, useFormStatus } from "react-dom";
@@ -22,11 +34,11 @@ interface BuildSummaryProps {
   selectedComponents: Record<string, Component>;
 }
 
-function SubmitButton({ disabled }: { disabled: boolean }) {
+function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" className="w-full" disabled={pending || disabled}>
+    <Button type="submit" className="w-full" disabled={pending}>
       {pending ? "Processing..." : "Complete Your Build"}
     </Button>
   );
@@ -35,12 +47,12 @@ function SubmitButton({ disabled }: { disabled: boolean }) {
 export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
   const router = useRouter();
   const [state, formAction] = useFormState(completeBuild, null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const componentPrices = Object.values(selectedComponents).map(
     (component) => component.price
   );
 
-  console.log("Component Prices:", componentPrices);
   const totalPrice = sumPrices(componentPrices);
 
   useEffect(() => {
@@ -52,6 +64,10 @@ export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
       toast.error(state.message);
     }
   }, [state, router]);
+
+  const isCompleteDisabled =
+    Object.keys(selectedComponents).length !==
+    Object.keys(componentCategories).length;
 
   return (
     <Card className="">
@@ -75,24 +91,44 @@ export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
         ))}
       </CardContent>
       <CardFooter className="">
-        <form action={formAction} className="w-full">
-          <input
-            type="hidden"
-            name="components"
-            value={JSON.stringify(selectedComponents)}
-          />
-          <input
-            type="hidden"
-            name="totalPrice"
-            value={totalPrice.toString()}
-          />
-          <SubmitButton
-            disabled={
-              Object.keys(selectedComponents).length !==
-              Object.keys(componentCategories).length
-            }
-          />
-        </form>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="w-full" disabled={isCompleteDisabled}>
+              Complete Your Build
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Name Your PC Build</DialogTitle>
+              <DialogDescription>
+                Give your PC build a name before completing it.
+              </DialogDescription>
+            </DialogHeader>
+            <form action={formAction} className="grid gap-4 py-2">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Name
+                </Label>
+                <Input id="name" name="buildName" className="col-span-3" />
+
+                <input
+                  type="hidden"
+                  name="components"
+                  value={JSON.stringify(selectedComponents)}
+                />
+                <input
+                  type="hidden"
+                  name="totalPrice"
+                  value={totalPrice.toString()}
+                />
+              </div>
+
+              <DialogFooter>
+                <SubmitButton />
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </CardFooter>
     </Card>
   );

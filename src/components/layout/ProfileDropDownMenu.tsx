@@ -1,3 +1,4 @@
+"use client ";
 import {
   Cloud,
   CreditCard,
@@ -33,12 +34,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useState } from "react";
 
 export function ProfileDropDownMenu() {
+  const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
           <AvatarImage src="https://github.com/shadcn.png" />
@@ -108,7 +112,8 @@ export function ProfileDropDownMenu() {
         <DropdownMenuSeparator /> */}
         <DropdownMenuItem
           onClick={() => {
-            redirect("/user-list");
+            router.push("/user-list");
+            setIsOpen(false);
           }}
         >
           <PcCase className="mr-2 h-4 w-4" />
@@ -126,7 +131,8 @@ export function ProfileDropDownMenu() {
         <DropdownMenuItem
           onClick={() => {
             signOut();
-            redirect("/");
+            router.push("/");
+            setIsOpen(false);
           }}
         >
           <LogOut className="mr-2 h-4 w-4" />
