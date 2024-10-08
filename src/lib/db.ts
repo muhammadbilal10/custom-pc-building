@@ -1,22 +1,42 @@
 import mongoose, { Connection } from "mongoose";
 
-let cachedConnection: Connection | null = null;
+declare global {
+  var mongoose: {
+    conn: Connection | null;
+    promise: Promise<Connection> | null;
+  };
+}
+
+if (!global.mongoose) {
+  global.mongoose = {
+    conn: null,
+    promise: null,
+  };
+}
 
 export async function connectToDB() {
-  if (cachedConnection) {
-    console.log("Using cached MongoDB connection");
-    return cachedConnection;
+  if (global.mongoose.conn) {
+    console.log("Using existing MongoDB connection");
+    return global.mongoose.conn;
   }
+
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in environment variables");
+  }
+
+  if (!global.mongoose.promise) {
+    console.log("Creating new MongoDB connection");
+    global.mongoose.promise = mongoose
+      .connect(process.env.MONGODB_URI)
+      .then((mongoose) => mongoose.connection);
+  }
+
   try {
-    const connection = await mongoose.connect(
-      process.env.MONGODB_URI as string
-    );
-    cachedConnection = connection.connection;
-    console.log("New MongoDB connection created");
-    return cachedConnection;
+    global.mongoose.conn = await global.mongoose.promise;
+    return global.mongoose.conn;
   } catch (error) {
-    console.log("Error connecting to MongoDB", error);
-    console.error("Error connecting to MongoDB", error);
-    return null;
+    console.error("Error connecting to MongoDB:", error);
+    global.mongoose.promise = null;
+    throw error;
   }
 }

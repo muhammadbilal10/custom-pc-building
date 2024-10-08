@@ -4,6 +4,10 @@ import { connectToDB } from "@/lib/db";
 import Product, { ProductDocument } from "@/models/product";
 import { redirect } from "next/navigation";
 import { Component, ComponentResponse } from "@/types/component"; // Make sure to import these types
+import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
+import Build from "@/models/build";
+import User from "@/models/user";
 
 export async function handleAdd(formData: FormData) {
   const price = formData.get("price") as string;
@@ -76,4 +80,80 @@ export async function fetchComponentById(id: string) {
       message: "Failed to fetch component",
     };
   }
+}
+
+// add to user's list
+
+export async function completeBuild(prevState: any, formData: FormData) {
+  try {
+    await connectToDB();
+    const session = await auth();
+    if (!session || !session.user) {
+      return { success: false, message: "User not authenticated" };
+    }
+
+    // find user by email
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    const componentsJson = formData.get("components") as string;
+    const totalPrice = formData.get("totalPrice") as string;
+    const components = JSON.parse(componentsJson);
+
+    const newBuild = new Build({
+      userId: user.id,
+      components: components,
+      totalPrice: totalPrice,
+    });
+
+    await newBuild.save();
+
+    revalidatePath("/builds");
+
+    return { success: true, message: "Build completed successfully" };
+  } catch (error) {
+    console.error("Error completing build:", error);
+    return { success: false, message: "Failed to complete build" };
+  }
+}
+
+// get all builds of a user
+export async function getUserAllBuilds() {
+  try {
+    await connectToDB();
+    const session = await auth();
+    if (!session || !session.user) {
+      return { success: false, message: "User not authenticated" };
+    }
+
+    const user = await User.findOne({ email: session.user.email });
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    const builds = await Build.find({ userId: user.id }).lean();
+    const typedBuilds = builds.map((build: any) => ({
+      _id: build._id.toString(),
+      userId: build.userId.toString(),
+      components: build.components,
+      totalPrice: build.totalPrice,
+    }));
+    console.log(typedBuilds);
+    return {
+      success: true,
+      message: "Builds fetched successfully",
+      builds: typedBuilds,
+    };
+  } catch (error) {
+    console.error("Error getting user builds:", error);
+    return { success: false, message: "Failed to get user builds" };
+  }
+}
+function calculateTotalPrice(components: Record<string, any>): number {
+  return Object.values(components).reduce(
+    (total, component) => total + component.price,
+    0
+  );
 }

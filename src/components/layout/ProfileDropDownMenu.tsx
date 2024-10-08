@@ -7,6 +7,7 @@ import {
   LogOut,
   Mail,
   MessageSquare,
+  PcCase,
   Plus,
   PlusCircle,
   Settings,
@@ -105,19 +106,23 @@ export function ProfileDropDownMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator /> */}
-        {/* <DropdownMenuItem>
-          <Github className="mr-2 h-4 w-4" />
-          <span>GitHub</span>
+        <DropdownMenuItem
+          onClick={() => {
+            redirect("/user-list");
+          }}
+        >
+          <PcCase className="mr-2 h-4 w-4" />
+          <span>My Builds</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <LifeBuoy className="mr-2 h-4 w-4" />
           <span>Support</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
           <Cloud className="mr-2 h-4 w-4" />
           <span>API</span>
-        </DropdownMenuItem> */}
-        {/* <DropdownMenuSeparator /> */}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator /> */}
         <DropdownMenuItem
           onClick={() => {
             signOut();

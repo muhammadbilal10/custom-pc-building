@@ -1,4 +1,4 @@
-// app/components/pc-builder/build-summary.tsx
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,18 +10,48 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Component } from "@/types/component";
-import { sumPrices, formatPrice } from "@/utils/priceUtils";
+import { sumPrices, formatPrice, parsePrice } from "@/utils/priceUtils";
 import { componentCategories } from "@/constant";
+import { completeBuild } from "@/server-actions/pc";
+import { useFormState, useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 interface BuildSummaryProps {
   selectedComponents: Record<string, Component>;
 }
 
+function SubmitButton({ disabled }: { disabled: boolean }) {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="w-full" disabled={pending || disabled}>
+      {pending ? "Processing..." : "Complete Your Build"}
+    </Button>
+  );
+}
+
 export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
+  const router = useRouter();
+  const [state, formAction] = useFormState(completeBuild, null);
+
   const componentPrices = Object.values(selectedComponents).map(
     (component) => component.price
   );
+
+  console.log("Component Prices:", componentPrices);
   const totalPrice = sumPrices(componentPrices);
+
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Build completed successfully");
+      router.push("/user-list");
+    }
+    if (state?.success === false) {
+      toast.error(state.message);
+    }
+  }, [state, router]);
 
   return (
     <Card className="">
@@ -45,15 +75,24 @@ export function BuildSummary({ selectedComponents }: BuildSummaryProps) {
         ))}
       </CardContent>
       <CardFooter className="">
-        <Button
-          className="w-full"
-          disabled={
-            Object.keys(selectedComponents).length !==
-            componentCategories.length
-          }
-        >
-          Complete Your Build
-        </Button>
+        <form action={formAction} className="w-full">
+          <input
+            type="hidden"
+            name="components"
+            value={JSON.stringify(selectedComponents)}
+          />
+          <input
+            type="hidden"
+            name="totalPrice"
+            value={totalPrice.toString()}
+          />
+          <SubmitButton
+            disabled={
+              Object.keys(selectedComponents).length !==
+              Object.keys(componentCategories).length
+            }
+          />
+        </form>
       </CardFooter>
     </Card>
   );
