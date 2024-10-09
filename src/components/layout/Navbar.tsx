@@ -92,6 +92,11 @@ const Navbar = () => {
   const links = [
     { name: "Products", href: "#", icon: Home },
     { name: "Guides", href: "/build-guide", icon: Handshake },
+    {
+      name: "Feeds",
+      href: "/feeds",
+      icon: BookText,
+    },
   ];
 
   React.useEffect(() => {}, [session]);

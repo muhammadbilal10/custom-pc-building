@@ -18,12 +18,16 @@ export async function handleAdd(formData: FormData) {
 }
 
 // for test purpose using mock data
-export async function getComponents(): Promise<ComponentResponse> {
+export async function getComponents(
+  price: string,
+  name: string
+): Promise<ComponentResponse> {
   try {
     await connectToDB();
-    const components = await Product.find().lean();
 
-    // Convert MongoDB documents to Component type
+    const components = await Product.find({});
+
+    // Convert MongoDB documents to Component type and filter by price
     const typedComponents: Component[] = components.map((component: any) => ({
       _id: component._id.toString(),
       name: component.name,
@@ -163,6 +167,32 @@ export async function getUserAllBuilds() {
   } catch (error) {
     console.error("Error getting user builds:", error);
     return { success: false, message: "Failed to get user builds" };
+  }
+}
+
+// get all builds
+export async function getAllBuilds() {
+  try {
+    await connectToDB();
+
+    // get all build along with user name as well
+    const builds = await Build.find({}).populate("userId").lean();
+    console.log(builds);
+    const typedBuilds = builds.map((build: any) => ({
+      _id: build._id.toString(),
+      userId: build.userId.name,
+      name: build.name,
+      components: build.components,
+      totalPrice: build.totalPrice,
+    }));
+    return {
+      success: true,
+      message: "Builds fetched successfully",
+      builds: typedBuilds || [],
+    };
+  } catch (error) {
+    console.error("Error getting all builds:", error);
+    return { success: false, message: "Failed to get all builds" };
   }
 }
 

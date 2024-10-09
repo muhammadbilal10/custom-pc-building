@@ -13,8 +13,16 @@ interface ComponentResponse {
   components?: Component[];
 }
 
-export default async function ListPage() {
-  const componentsData: ComponentResponse = await getComponents();
+export default async function ListPage({
+  searchParams,
+}: {
+  searchParams: { price: string; pcType: string };
+}) {
+  console.log(searchParams);
+
+  const price = searchParams.price;
+  const pcType = searchParams.pcType;
+  const componentsData: ComponentResponse = await getComponents(price, pcType);
   console.log(componentsData);
   if (!componentsData.success) {
     return <div>{componentsData.message}</div>;

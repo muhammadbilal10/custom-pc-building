@@ -66,6 +66,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
                   <SelectContent>
                     <SelectItem value="gaming">Gaming PC</SelectItem>
                     <SelectItem value="desktop">Desktop PC</SelectItem>
+                    <SelectItem value="graphic">Graphic Design</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
