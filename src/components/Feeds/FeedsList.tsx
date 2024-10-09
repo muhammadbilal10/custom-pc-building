@@ -17,7 +17,7 @@ export default async function FeedsList() {
   const builds = allBuilds.builds;
 
   return (
-    <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {builds?.map((build) => (
         <PCBuildFeedItem
           key={build._id}
