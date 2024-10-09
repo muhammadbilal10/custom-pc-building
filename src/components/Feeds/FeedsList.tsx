@@ -23,7 +23,7 @@ export default async function FeedsList() {
           key={build._id}
           build={{
             ...build,
-            totalPrice: build.totalPrice.toString(),
+            totalPrice: Number(build.totalPrice),
             id: build._id,
           }}
         />

@@ -20,5 +20,6 @@ export function sumPrices(prices: string[]): number {
 }
 
 export function formatPrice(price: number): string {
+  console.log(price);
   return `Rs.${price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }
