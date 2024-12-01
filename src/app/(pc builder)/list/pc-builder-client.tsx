@@ -9,9 +9,16 @@ import { BuildSummary } from "@/components/PC/build-summary";
 import { componentCategories } from "@/constant";
 import { Component } from "@/types/component"; // Import the Component type from a shared location
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { checkCompatibility } from "@/utils/compatibilityCheck";
+import { toast } from "sonner";
 
 interface PCBuilderClientProps {
   initialComponents: Component[];
+}
+
+interface CompatibilityStatus {
+  message: string;
+  isCompatible: boolean;
 }
 
 export default function PCBuilderClient({
@@ -22,9 +29,39 @@ export default function PCBuilderClient({
   const [selectedComponents, setSelectedComponents] = useState<
     Record<string, Component>
   >({});
+  const [compatibility, setCompatibility] = useState<CompatibilityStatus>({
+    message: "",
+    isCompatible: true,
+  });
 
-  const handleSelectComponent = (category: string, component: Component) => {
+  const handleSelectComponent = async (
+    category: string,
+    component: Component
+  ) => {
+    const existingComponentCount = Object.keys(selectedComponents).length;
+    let compatibilityStatus = { message: "", isCompatible: true };
+
+    if (existingComponentCount > 0) {
+      const compatibilityResult = await checkCompatibility(
+        selectedComponents,
+        component,
+        category
+      );
+
+      compatibilityStatus = {
+        message: (compatibilityResult.message as string) || "",
+        isCompatible: compatibilityResult.isCompatible,
+      };
+
+      setCompatibility(compatibilityStatus);
+
+      if (!compatibilityResult.isCompatible) {
+        return;
+      }
+    }
+
     setSelectedComponents((prev) => ({ ...prev, [category]: component }));
+
     if (currentStep < componentCategories.length - 1) {
       setCurrentStep(currentStep + 1);
     }
@@ -34,6 +71,24 @@ export default function PCBuilderClient({
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
+  };
+
+  const handleRemoveComponent = async (category: string) => {
+    const updatedComponents = { ...selectedComponents };
+    delete updatedComponents[category];
+
+    // Reset compatibility status when removing components
+    setCompatibility({ message: "", isCompatible: true });
+
+    // Find the index of the category and set it as current step
+    const categoryIndex = componentCategories.findIndex(
+      (c) => c.name === category
+    );
+    if (categoryIndex !== -1) {
+      setCurrentStep(categoryIndex);
+    }
+
+    setSelectedComponents(updatedComponents);
   };
 
   const currentCategory = componentCategories[currentStep];
@@ -76,7 +131,11 @@ export default function PCBuilderClient({
         </CardContent>
       </Card>
 
-      <BuildSummary selectedComponents={selectedComponents} />
+      <BuildSummary
+        selectedComponents={selectedComponents}
+        onRemoveComponent={handleRemoveComponent}
+        compatibility={compatibility}
+      />
     </div>
   );
 }
