@@ -13,6 +13,7 @@ import { checkCompatibility } from "@/utils/compatibilityCheck";
 import { toast } from "sonner";
 import { sumPrices, formatPrice } from "@/utils/priceUtils";
 import { PCBuild } from "@/types/pc";
+import { Loader2 } from "lucide-react";
 
 interface PCBuilderClientProps {
   initialComponents: Component[];
@@ -37,60 +38,72 @@ export default function PCBuilderClient({
     message: "",
     isCompatible: true,
   });
+  const [isCheckingCompatibility, setIsCheckingCompatibility] = useState(false);
+  const [processingCategory, setProcessingCategory] = useState<string | null>(
+    null
+  );
 
   const handleSelectComponent = async (
     category: string,
     component: Component
   ) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const budget = Number(searchParams.get("price")) || 0;
+    setIsCheckingCompatibility(true);
+    setProcessingCategory(category);
 
-    // Calculate current total price excluding the component being replaced
-    const currentComponents = { ...selectedComponents };
-    delete currentComponents[category];
-    const currentTotal = sumPrices(
-      Object.values(currentComponents).map((c) => c.price)
-    );
-    const componentPrice = parseFloat(
-      component.price.replace(/[^0-9.-]+/g, "")
-    );
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const budget = Number(searchParams.get("price")) || 0;
 
-    // Check if adding this component would exceed budget
-    if (currentTotal + componentPrice > budget) {
-      toast.error(
-        `Adding ${component.name} would exceed your budget of ${formatPrice(
-          budget
-        )}`
+      // Calculate current total price excluding the component being replaced
+      const currentComponents = { ...selectedComponents };
+      delete currentComponents[category];
+      const currentTotal = sumPrices(
+        Object.values(currentComponents).map((c) => c.price)
       );
-      return;
-    }
-
-    const existingComponentCount = Object.keys(selectedComponents).length;
-    let compatibilityStatus = { message: "", isCompatible: true };
-
-    if (existingComponentCount > 0) {
-      const compatibilityResult = await checkCompatibility(
-        selectedComponents,
-        component,
-        category
+      const componentPrice = parseFloat(
+        component.price.replace(/[^0-9.-]+/g, "")
       );
 
-      compatibilityStatus = {
-        message: (compatibilityResult.message as string) || "",
-        isCompatible: compatibilityResult.isCompatible,
-      };
-
-      setCompatibility(compatibilityStatus);
-
-      if (!compatibilityResult.isCompatible) {
+      // Check if adding this component would exceed budget
+      if (currentTotal + componentPrice > budget) {
+        toast.error(
+          `Adding ${component.name} would exceed your budget of ${formatPrice(
+            budget
+          )}`
+        );
         return;
       }
-    }
 
-    setSelectedComponents((prev) => ({ ...prev, [category]: component }));
+      const existingComponentCount = Object.keys(selectedComponents).length;
+      let compatibilityStatus = { message: "", isCompatible: true };
 
-    if (currentStep < componentCategories.length - 1) {
-      setCurrentStep(currentStep + 1);
+      if (existingComponentCount > 0) {
+        const compatibilityResult = await checkCompatibility(
+          selectedComponents,
+          component,
+          category
+        );
+
+        compatibilityStatus = {
+          message: (compatibilityResult.message as string) || "",
+          isCompatible: compatibilityResult.isCompatible,
+        };
+
+        setCompatibility(compatibilityStatus);
+
+        if (!compatibilityResult.isCompatible) {
+          return;
+        }
+      }
+
+      setSelectedComponents((prev) => ({ ...prev, [category]: component }));
+
+      if (currentStep < componentCategories.length - 1) {
+        setCurrentStep(currentStep + 1);
+      }
+    } finally {
+      setIsCheckingCompatibility(false);
+      setProcessingCategory(null);
     }
   };
 
@@ -135,12 +148,14 @@ export default function PCBuilderClient({
             components={currentComponents}
             onSelect={handleSelectComponent}
             selectedComponent={selectedComponents[currentCategory.name]}
+            isLoading={isCheckingCompatibility}
+            processingCategory={processingCategory}
           />
 
           <div className="flex justify-between mt-6">
             <Button
               onClick={handlePreviousStep}
-              disabled={currentStep === 0}
+              disabled={currentStep === 0 || isCheckingCompatibility}
               variant="outline"
             >
               Previous Step
@@ -149,7 +164,8 @@ export default function PCBuilderClient({
               onClick={() => setCurrentStep(currentStep + 1)}
               disabled={
                 currentStep === componentCategories.length - 1 ||
-                !selectedComponents[currentCategory.name]
+                !selectedComponents[currentCategory.name] ||
+                isCheckingCompatibility
               }
             >
               Next Step

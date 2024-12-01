@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, Loader2 } from "lucide-react";
 import { Component } from "@/types/component";
 
 interface ComponentListProps {
@@ -22,6 +22,8 @@ interface ComponentListProps {
   components: Component[];
   onSelect: (category: string, component: Component) => void;
   selectedComponent?: Component;
+  isLoading?: boolean;
+  processingCategory?: string | null;
 }
 
 export function ComponentList({
@@ -29,6 +31,8 @@ export function ComponentList({
   components,
   onSelect,
   selectedComponent,
+  isLoading = false,
+  processingCategory = null,
 }: ComponentListProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const CategoryIcon = category.icon;
@@ -65,7 +69,6 @@ export function ComponentList({
             </CardHeader>
             <CardContent>
               <p>{component.description}</p>
-              {/* Remove or modify the specs rendering if it's not part of your data */}
             </CardContent>
             <CardFooter>
               <Button
@@ -76,10 +79,18 @@ export function ComponentList({
                     : "default"
                 }
                 className="w-full"
+                disabled={isLoading}
               >
-                {selectedComponent?._id === component._id
-                  ? "Selected"
-                  : "Select"}
+                {isLoading && processingCategory === category.name ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Checking compatibility...</span>
+                  </div>
+                ) : selectedComponent?._id === component._id ? (
+                  "Selected"
+                ) : (
+                  "Select"
+                )}
               </Button>
             </CardFooter>
           </Card>
