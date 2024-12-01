@@ -12,9 +12,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { checkCompatibility } from "@/utils/compatibilityCheck";
 import { toast } from "sonner";
 import { sumPrices, formatPrice } from "@/utils/priceUtils";
+import { PCBuild } from "@/types/pc";
 
 interface PCBuilderClientProps {
   initialComponents: Component[];
+  editBuild?: any;
 }
 
 interface CompatibilityStatus {
@@ -24,12 +26,13 @@ interface CompatibilityStatus {
 
 export default function PCBuilderClient({
   initialComponents,
+  editBuild,
 }: PCBuilderClientProps) {
   console.log(initialComponents);
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedComponents, setSelectedComponents] = useState<
     Record<string, Component>
-  >({});
+  >(editBuild ? editBuild.components : {});
   const [compatibility, setCompatibility] = useState<CompatibilityStatus>({
     message: "",
     isCompatible: true,
@@ -159,6 +162,7 @@ export default function PCBuilderClient({
         selectedComponents={selectedComponents}
         onRemoveComponent={handleRemoveComponent}
         compatibility={compatibility}
+        editBuildId={editBuild?._id}
       />
     </div>
   );

@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { MoreVertical, Trash } from "lucide-react";
+import { MoreVertical, Trash, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PCBuild } from "@/types/pc-build";
 import { formatPrice } from "@/utils/priceUtils";
@@ -32,6 +32,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface PCBuildCardProps {
   build: PCBuild;
@@ -55,17 +56,23 @@ export function PCBuildCard({ build }: PCBuildCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
-          {build?.name || "No Name"}
-        </CardTitle>
+        <CardTitle className="text-sm font-medium">{build.name}</CardTitle>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
               <MoreVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link
+                href={`/list?price=${build.totalPrice}&pcType=edit&buildId=${build._id}`}
+                className="flex items-center"
+              >
+                <Edit className="mr-2 h-4 w-4" />
+                <span>Edit</span>
+              </Link>
+            </DropdownMenuItem>
             <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
               <AlertDialogTrigger asChild>
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

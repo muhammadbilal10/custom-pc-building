@@ -1,7 +1,8 @@
 import PCBuilderClient from "@/app/(pc builder)/list/pc-builder-client";
 import BreadCrumb from "@/components/layout/BreadCrumb";
-import { getComponents } from "@/server-actions/pc";
+import { getComponents, getUserAllBuilds } from "@/server-actions/pc";
 import { Component } from "@/types/component";
+import { PCBuild } from "@/types/pc";
 
 import { CheckCircle, Plus } from "lucide-react";
 import Link from "next/link";
@@ -16,7 +17,7 @@ interface ComponentResponse {
 export default async function ListPage({
   searchParams,
 }: {
-  searchParams: { price: string; pcType: string };
+  searchParams: { price: string; pcType: string; buildId?: string };
 }) {
   console.log(searchParams);
 
@@ -24,6 +25,20 @@ export default async function ListPage({
   const pcType = searchParams.pcType;
   const componentsData: ComponentResponse = await getComponents(price, pcType);
   console.log(componentsData);
+
+  let editBuild: any;
+  if (searchParams.buildId) {
+    const buildsResponse = await getUserAllBuilds();
+    if (buildsResponse.success && buildsResponse.builds) {
+      const result = buildsResponse.builds.find(
+        (build) => build._id === searchParams.buildId
+      );
+      if (result) {
+        editBuild = result;
+      }
+    }
+  }
+
   if (!componentsData.success) {
     return <div>{componentsData.message}</div>;
   }
@@ -66,6 +81,7 @@ export default async function ListPage({
           <Suspense fallback={<Loading />}>
             <PCBuilderClient
               initialComponents={componentsData.components || []}
+              editBuild={editBuild}
             />
           </Suspense>
         </div>

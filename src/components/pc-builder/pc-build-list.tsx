@@ -3,7 +3,7 @@ import { PCBuildCard } from "./pc-build-card";
 import { getUserAllBuilds } from "@/server-actions/pc";
 
 export async function PCBuildList() {
-  const buildsResponse = await getUserAllBuilds();
+  const buildsResponse: any = await getUserAllBuilds();
 
   if (
     buildsResponse.success === false ||
@@ -16,7 +16,7 @@ export async function PCBuildList() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {builds?.map((build) => (
+      {builds?.map((build: any) => (
         <PCBuildCard
           key={build._id}
           build={{ ...build, totalPrice: build.totalPrice.toString() }}

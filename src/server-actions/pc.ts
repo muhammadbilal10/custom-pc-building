@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
 import Build from "@/models/build";
 import User from "@/models/user";
+import { PCComponent } from "@/types/pc";
 
 export async function handleAdd(formData: FormData) {
   const price = formData.get("price") as string;
@@ -105,7 +106,6 @@ export async function completeBuild(prevState: any, formData: FormData) {
       return { success: false, message: "User not authenticated" };
     }
 
-    // find user by email
     const user = await User.findOne({ email: session.user.email });
     if (!user) {
       return { success: false, message: "User not found" };
@@ -114,10 +114,33 @@ export async function completeBuild(prevState: any, formData: FormData) {
     const componentsJson = formData.get("components") as string;
     const totalPrice = formData.get("totalPrice") as string;
     const buildName = formData.get("buildName") as string;
+    const buildId = formData.get("buildId") as string;
     const components = JSON.parse(componentsJson);
 
-    console.log(buildName);
+    if (buildId) {
+      // Update existing build
+      const existingBuild = await Build.findOne({
+        _id: buildId,
+        userId: user.id,
+      });
+      if (!existingBuild) {
+        return {
+          success: false,
+          message: "Build not found or not owned by user",
+        };
+      }
 
+      await Build.findByIdAndUpdate(buildId, {
+        name: buildName,
+        components: components,
+        totalPrice: totalPrice,
+      });
+
+      revalidatePath("/user-list");
+      return { success: true, message: "Build updated successfully" };
+    }
+
+    // Create new build
     const newBuild = new Build({
       userId: user.id,
       name: buildName,
@@ -126,9 +149,7 @@ export async function completeBuild(prevState: any, formData: FormData) {
     });
 
     await newBuild.save();
-
-    revalidatePath("/builds");
-
+    revalidatePath("/user-list");
     return { success: true, message: "Build completed successfully" };
   } catch (error) {
     console.error("Error completing build:", error);
@@ -152,12 +173,13 @@ export async function getUserAllBuilds() {
 
     const builds = await Build.find({ userId: user.id }).lean();
     const typedBuilds = builds.map((build: any) => ({
-      _id: build._id.toString(),
-      userId: build.userId.toString(),
-      name: build.name,
-      components: build.components,
-      totalPrice: build.totalPrice,
+      _id: build._id.toString() as string,
+      userId: build.userId.toString() as string,
+      name: build.name as string,
+      components: build.components as PCComponent,
+      totalPrice: build.totalPrice as number,
     }));
+
     console.log(typedBuilds);
     return {
       success: true,
@@ -225,6 +247,19 @@ export async function deleteUserBuild(prevState: any, formData: FormData) {
   } catch (error) {
     console.error("Error deleting build:", error);
     return { success: false, message: "Failed to delete build" };
+  }
+}
+
+// get all specific Build
+export async function getBuildById(id: string) {
+  try {
+    await connectToDB();
+    const build = await Build.findById(id).populate("userId").lean();
+    console.log(build);
+    return build;
+  } catch (error) {
+    console.error("Error getting build by id:", error);
+    return null;
   }
 }
 

@@ -48,14 +48,15 @@ interface BuildSummaryProps {
     message: string | null;
     isCompatible: boolean;
   };
+  editBuildId?: string;
 }
 
-function SubmitButton() {
+function SubmitButton({ text }: { text: string }) {
   const { pending } = useFormStatus();
 
   return (
     <Button type="submit" className="w-full" disabled={pending}>
-      {pending ? "Processing..." : "Complete Your Build"}
+      {pending ? "Processing..." : text}
     </Button>
   );
 }
@@ -64,6 +65,7 @@ export function BuildSummary({
   selectedComponents,
   onRemoveComponent,
   compatibility,
+  editBuildId,
 }: BuildSummaryProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -238,9 +240,13 @@ export function BuildSummary({
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle>Name Your PC Build</DialogTitle>
+              <DialogTitle>
+                {editBuildId ? "Update Your PC Build" : "Name Your PC Build"}
+              </DialogTitle>
               <DialogDescription>
-                Give your PC build a name before completing it.
+                {editBuildId
+                  ? "Update your PC build configuration."
+                  : "Give your PC build a name before completing it."}
               </DialogDescription>
             </DialogHeader>
             <form action={formAction} className="grid gap-4 py-2">
@@ -265,10 +271,15 @@ export function BuildSummary({
                   name="totalPrice"
                   value={totalPrice.toString()}
                 />
+                {editBuildId && (
+                  <input type="hidden" name="buildId" value={editBuildId} />
+                )}
               </div>
 
               <DialogFooter>
-                <SubmitButton />
+                <SubmitButton
+                  text={editBuildId ? "Update Build" : "Complete Build"}
+                />
               </DialogFooter>
             </form>
           </DialogContent>
