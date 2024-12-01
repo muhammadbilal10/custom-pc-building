@@ -11,6 +11,7 @@ import { Component } from "@/types/component"; // Import the Component type from
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { checkCompatibility } from "@/utils/compatibilityCheck";
 import { toast } from "sonner";
+import { sumPrices, formatPrice } from "@/utils/priceUtils";
 
 interface PCBuilderClientProps {
   initialComponents: Component[];
@@ -38,6 +39,29 @@ export default function PCBuilderClient({
     category: string,
     component: Component
   ) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const budget = Number(searchParams.get("price")) || 0;
+
+    // Calculate current total price excluding the component being replaced
+    const currentComponents = { ...selectedComponents };
+    delete currentComponents[category];
+    const currentTotal = sumPrices(
+      Object.values(currentComponents).map((c) => c.price)
+    );
+    const componentPrice = parseFloat(
+      component.price.replace(/[^0-9.-]+/g, "")
+    );
+
+    // Check if adding this component would exceed budget
+    if (currentTotal + componentPrice > budget) {
+      toast.error(
+        `Adding ${component.name} would exceed your budget of ${formatPrice(
+          budget
+        )}`
+      );
+      return;
+    }
+
     const existingComponentCount = Object.keys(selectedComponents).length;
     let compatibilityStatus = { message: "", isCompatible: true };
 

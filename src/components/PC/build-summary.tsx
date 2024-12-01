@@ -26,7 +26,7 @@ import { sumPrices, formatPrice } from "@/utils/priceUtils";
 import { componentCategories } from "@/constant";
 import { completeBuild } from "@/server-actions/pc";
 import { useFormState, useFormStatus } from "react-dom";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { CheckCircle, Trash2, AlertCircle } from "lucide-react";
@@ -66,6 +66,9 @@ export function BuildSummary({
   compatibility,
 }: BuildSummaryProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const budget = Number(searchParams.get("price")) || 0;
+  const pcType = searchParams.get("pcType") || "";
   const [state, formAction] = useFormState(completeBuild, null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showCompatibility, setShowCompatibility] = useState(false);
@@ -75,6 +78,8 @@ export function BuildSummary({
   );
 
   const totalPrice = sumPrices(componentPrices);
+  const remainingBudget = budget - totalPrice;
+  const isOverBudget = totalPrice > budget;
 
   useEffect(() => {
     if (state?.success) {
@@ -88,7 +93,7 @@ export function BuildSummary({
 
   const isCompleteDisabled =
     Object.keys(selectedComponents).length !==
-    Object.keys(componentCategories).length;
+      Object.keys(componentCategories).length || isOverBudget;
 
   const componentCount = Object.keys(selectedComponents).length;
 
@@ -102,7 +107,12 @@ export function BuildSummary({
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
-          <CardTitle>Build Summary</CardTitle>
+          <div>
+            <CardTitle>Build Summary</CardTitle>
+            <CardDescription className="mt-2">
+              Budget: {formatPrice(budget)} ({pcType} PC)
+            </CardDescription>
+          </div>
           {Object.keys(selectedComponents).length > 0 && (
             <Button
               variant="ghost"
@@ -152,6 +162,39 @@ export function BuildSummary({
             No components selected yet
           </div>
         )}
+
+        <div className="mt-4 space-y-2">
+          <div className="flex justify-between items-center">
+            <span>Total Price:</span>
+            <span
+              className={cn(
+                "font-semibold",
+                isOverBudget ? "text-red-600" : "text-green-600"
+              )}
+            >
+              {formatPrice(totalPrice)}
+            </span>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <span>Remaining Budget:</span>
+            <span
+              className={cn(
+                "font-semibold",
+                remainingBudget < 0 ? "text-red-600" : "text-green-600"
+              )}
+            >
+              {formatPrice(remainingBudget)}
+            </span>
+          </div>
+
+          {isOverBudget && (
+            <p className="text-sm text-red-600 mt-2">
+              ⚠️ Your build exceeds the specified budget by{" "}
+              {formatPrice(Math.abs(remainingBudget))}
+            </p>
+          )}
+        </div>
       </CardContent>
 
       <AlertDialog open={showCompatibility} onOpenChange={setShowCompatibility}>
@@ -185,8 +228,12 @@ export function BuildSummary({
       <CardFooter className="">
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="w-full" disabled={isCompleteDisabled}>
-              Complete Your Build
+            <Button
+              className="w-full"
+              disabled={isCompleteDisabled}
+              title={isOverBudget ? "Build exceeds budget limit" : undefined}
+            >
+              {isOverBudget ? "Exceeds Budget Limit" : "Complete Your Build"}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
